@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.PacijentDTO;
+import com.example.demo.dto.ZdravstveniKartonDTO;
 import com.example.demo.model.Pacijent;
+import com.example.demo.model.ZdravstveniKarton;
 import com.example.demo.repository.PacijentRepository;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,22 @@ public class PacijentService {
             throw new ValueException("Pacijent sa datim id-em ne postoji");
         }
         return p;
+    }
+
+    public ZdravstveniKartonDTO izlistajKarton(Long id){
+        if (id == null){
+            throw new  ValueException("Pacijent sa datim id-em ne postoji");
+        }
+        Pacijent p = repository.findById(id).orElse(null);
+        if (p == null){
+            throw new  ValueException("Pacijent sa datim id-em ne postoji");
+        }
+        ZdravstveniKarton zk = p.getZdravstveniKarton();
+        if (zk == null){
+            throw new  ValueException("Zdravstevni karton sa datim id-em ne postoji");
+        }
+        ZdravstveniKartonDTO zdravstveniKartonDTO = new ZdravstveniKartonDTO(zk);
+        return zdravstveniKartonDTO;
+
     }
 }

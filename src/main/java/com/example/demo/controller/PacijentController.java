@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PacijentDTO;
+import com.example.demo.dto.ZdravstveniKartonDTO;
 import com.example.demo.model.Pacijent;
+import com.example.demo.model.ZdravstveniKarton;
 import com.example.demo.service.PacijentService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +34,15 @@ public class PacijentController {
         }
         return new ResponseEntity("Pogresan zahtev", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping(path = "/izlistajKarton/{id}", produces = "application/json")
+    private ResponseEntity izlistajKarton(@PathVariable Long id){
+        try {
+            ZdravstveniKartonDTO zdravstveniKartonDTO = service.izlistajKarton(id);
+            return new ResponseEntity(zdravstveniKartonDTO, HttpStatus.OK);
+        }catch (ValueException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

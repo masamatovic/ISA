@@ -69,8 +69,7 @@ public class Sala {
       return klinika;
    }
    
-   /** @pdGenerated default parent setter
-     * @param newKlinika */
+/*
    public void setKlinika(Klinika newKlinika) {
       if (this.klinika == null || !this.klinika.equals(newKlinika))
       {
@@ -87,5 +86,5 @@ public class Sala {
          }
       }
    }
-
+*/
 }

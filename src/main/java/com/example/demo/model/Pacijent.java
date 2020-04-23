@@ -41,7 +41,9 @@ public class Pacijent {
    private String jmbg;
    
    /** @pdRoleInfo migr=no name=ZdravstveniKarton assc=association9 mult=1..1 */
-   //public ZdravstveniKarton zdravstveniKarton;
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "karton_id", referencedColumnName = "id")
+   public ZdravstveniKarton zdravstveniKarton;
    /** @pdRoleInfo migr=no name=Pregled assc=association11 coll=java.util.List impl=java.util.ArrayList mult=0..* */
    //public java.util.List<Pregled> pregled;
    /** @pdRoleInfo migr=no name=ZahtevZaPregled assc=association33 coll=java.util.List impl=java.util.ArrayList mult=0..* */
@@ -51,6 +53,13 @@ public class Pacijent {
    public Pacijent() {
    }
 
+   public ZdravstveniKarton getZdravstveniKarton() {
+      return zdravstveniKarton;
+   }
+
+   public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
+      this.zdravstveniKarton = zdravstveniKarton;
+   }
 
    public Long getId() {
       return id;
