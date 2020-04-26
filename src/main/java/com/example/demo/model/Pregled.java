@@ -30,7 +30,7 @@ public class Pregled {
    
    /** @pdGenerated default parent setter
      * @param newDoktor */
-   public void setDoktor(Doktor newDoktor) {
+  /* public void setDoktor(Doktor newDoktor) {
       if (this.doktor == null || !this.doktor.equals(newDoktor))
       {
          if (this.doktor != null)
@@ -45,6 +45,6 @@ public class Pregled {
             this.doktor.addPregled(this);
          }
       }
-   }
+   }*/
 
 }

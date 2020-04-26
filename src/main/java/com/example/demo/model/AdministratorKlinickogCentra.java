@@ -4,59 +4,144 @@ package com.example.demo.model; /***********************************************
  * Purpose: Defines the Class AdministratorKlinickogCentra
  ***********************************************************************/
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import java.util.*;
 
-/** @pdOid 30ac365b-f456-4e53-a7b0-4b1e87fa2b47 */
-public class AdministratorKlinickogCentra {
-   /** @pdOid cf6e0e87-1a1f-4265-9f4d-ebf664f08566 */
+@Entity
+public class AdministratorKlinickogCentra implements UserDetails {
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid 6507aacc-45ba-4e53-9f5d-1e53dc8e3f16 */
+   @Column
    private String ime;
-   /** @pdOid bb12f493-0926-46b0-b67d-e337bcb29ae3 */
+   @Column
    private String prezime;
-   /** @pdOid e423a881-f6fa-4fd9-8c52-969fe57c92c1 */
+   @Column
    private String email;
-   /** @pdOid 933ce6e6-480e-4c11-aa57-7f7c89d76dae */
+   @Column
    private String lozinka;
-   /** @pdOid 78ae1831-1ba9-4c70-9227-64664fab622b */
+   @Column
    private String adresa;
-   /** @pdOid 5dc281bf-6a72-404a-91c4-4e440f4c9077 */
+   @Column
    private String grad;
-   /** @pdOid 9da9af60-defd-4797-b04e-d983cc7697bc */
+   @Column
    private String drzava;
-   /** @pdOid 8bde1bc7-5dbf-4f5a-8be4-ac7f7a85e7e5 */
+   @Column
    private String telefon;
-   /** @pdOid dcca9502-91db-4e20-975a-b17127bbe852 */
+   @Column
    private String jmbg;
-   
-   /** @pdRoleInfo migr=no name=ZahtevZaRegistraciju assc=association32 coll=java.util.List impl=java.util.ArrayList mult=0..* */
-   public java.util.List<ZahtevZaRegistraciju> zahtevZaRegistraciju;
-   
-   
-   /** @pdGenerated default getter */
+
+   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+   @JoinTable(name = "adminkc_authority",
+           joinColumns = @JoinColumn(name = "adminkc_id", referencedColumnName = "id"),
+           inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+   private List<Authority> authorities;
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public String getIme() {
+      return ime;
+   }
+
+   public void setIme(String ime) {
+      this.ime = ime;
+   }
+
+   public String getPrezime() {
+      return prezime;
+   }
+
+   public void setPrezime(String prezime) {
+      this.prezime = prezime;
+   }
+
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public String getLozinka() {
+      return lozinka;
+   }
+
+   public void setLozinka(String lozinka) {
+      this.lozinka = lozinka;
+   }
+
+   public String getAdresa() {
+      return adresa;
+   }
+
+   public void setAdresa(String adresa) {
+      this.adresa = adresa;
+   }
+
+   public String getGrad() {
+      return grad;
+   }
+
+   public void setGrad(String grad) {
+      this.grad = grad;
+   }
+
+   public String getDrzava() {
+      return drzava;
+   }
+
+   public void setDrzava(String drzava) {
+      this.drzava = drzava;
+   }
+
+   public String getTelefon() {
+      return telefon;
+   }
+
+   public void setTelefon(String telefon) {
+      this.telefon = telefon;
+   }
+
+   public String getJmbg() {
+      return jmbg;
+   }
+
+   public void setJmbg(String jmbg) {
+      this.jmbg = jmbg;
+   }
+
+   /*public java.util.List<ZahtevZaRegistraciju> zahtevZaRegistraciju;
+
+
    public java.util.List<ZahtevZaRegistraciju> getZahtevZaRegistraciju() {
       if (zahtevZaRegistraciju == null)
          zahtevZaRegistraciju = new java.util.ArrayList<ZahtevZaRegistraciju>();
       return zahtevZaRegistraciju;
    }
-   
-   /** @pdGenerated default iterator getter */
+
    public java.util.Iterator getIteratorZahtevZaRegistraciju() {
       if (zahtevZaRegistraciju == null)
          zahtevZaRegistraciju = new java.util.ArrayList<ZahtevZaRegistraciju>();
       return zahtevZaRegistraciju.iterator();
    }
-   
-   /** @pdGenerated default setter
-     * @param newZahtevZaRegistraciju */
+
    public void setZahtevZaRegistraciju(java.util.List<ZahtevZaRegistraciju> newZahtevZaRegistraciju) {
       removeAllZahtevZaRegistraciju();
-      for (java.util.Iterator iter = newZahtevZaRegistraciju.iterator(); iter.hasNext();)
-         addZahtevZaRegistraciju((ZahtevZaRegistraciju)iter.next());
+      for (java.util.Iterator iter = newZahtevZaRegistraciju.iterator(); iter.hasNext(); )
+         addZahtevZaRegistraciju((ZahtevZaRegistraciju) iter.next());
    }
-   
-   /** @pdGenerated default add
-     * @param newZahtevZaRegistraciju */
+
    public void addZahtevZaRegistraciju(ZahtevZaRegistraciju newZahtevZaRegistraciju) {
       if (newZahtevZaRegistraciju == null)
          return;
@@ -65,9 +150,7 @@ public class AdministratorKlinickogCentra {
       if (!this.zahtevZaRegistraciju.contains(newZahtevZaRegistraciju))
          this.zahtevZaRegistraciju.add(newZahtevZaRegistraciju);
    }
-   
-   /** @pdGenerated default remove
-     * @param oldZahtevZaRegistraciju */
+
    public void removeZahtevZaRegistraciju(ZahtevZaRegistraciju oldZahtevZaRegistraciju) {
       if (oldZahtevZaRegistraciju == null)
          return;
@@ -75,11 +158,48 @@ public class AdministratorKlinickogCentra {
          if (this.zahtevZaRegistraciju.contains(oldZahtevZaRegistraciju))
             this.zahtevZaRegistraciju.remove(oldZahtevZaRegistraciju);
    }
-   
-   /** @pdGenerated default removeAll */
+
    public void removeAllZahtevZaRegistraciju() {
       if (zahtevZaRegistraciju != null)
          zahtevZaRegistraciju.clear();
+   }*/
+
+   public void setAuthorities(List<Authority> authorities) {
+      this.authorities = authorities;
    }
 
+   @Override
+   public Collection<? extends GrantedAuthority> getAuthorities() {
+      return this.authorities;
+   }
+
+   @Override
+   public String getPassword() {
+      return lozinka;
+   }
+
+   @Override
+   public String getUsername() {
+      return email;
+   }
+
+   @Override
+   public boolean isAccountNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isAccountNonLocked() {
+      return true;
+   }
+
+   @Override
+   public boolean isCredentialsNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isEnabled() {
+      return true;
+   }
 }

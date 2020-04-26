@@ -9,6 +9,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class PacijentController {
     private PacijentService service;
 
     @PutMapping(path="/izmeni", consumes = "application/json", produces= "application/json")
+    @PreAuthorize("hasAuthority('PACIJENT')")
     private ResponseEntity izmeni (@RequestBody PacijentDTO pacijentDTO){
         if (pacijentDTO!=null){
             try {
