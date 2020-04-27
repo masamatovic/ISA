@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.websocket.server.PathParam;
 import javax.xml.ws.Response;
 
 @CrossOrigin
@@ -24,9 +25,10 @@ public class PacijentController {
     @Autowired
     private PacijentService service;
 
-    @PutMapping(path="/izmeni", consumes = "application/json", produces= "application/json")
+    @GetMapping(path = "/izlistajPacijenta/{id}")
     @PreAuthorize("hasAuthority('PACIJENT')")
-    private ResponseEntity izmeni (@RequestBody PacijentDTO pacijentDTO){
+    public ResponseEntity izlistajPacijenta(@PathVariable Long id){
+        PacijentDTO pacijentDTO = service.izlistajPacijenta(id);
         if (pacijentDTO!=null){
             try {
                 return new ResponseEntity(pacijentDTO, HttpStatus.OK);
@@ -37,8 +39,23 @@ public class PacijentController {
         return new ResponseEntity("Pogresan zahtev", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping(path="/izmeni", consumes = "application/json", produces= "application/json")
+    @PreAuthorize("hasAuthority('PACIJENT')")
+    public ResponseEntity izmeni (@RequestBody PacijentDTO pacijentDTO){
+
+        if (pacijentDTO!=null){
+            try {
+                service.izmeni(pacijentDTO);
+                return new ResponseEntity(pacijentDTO, HttpStatus.OK);
+            }catch (ValueException e){
+                return new ResponseEntity(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+        }
+        return new ResponseEntity("Pogresan zahtev", HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping(path = "/izlistajKarton/{id}", produces = "application/json")
-    private ResponseEntity izlistajKarton(@PathVariable Long id){
+    public ResponseEntity izlistajKarton(@PathVariable Long id){
         try {
             ZdravstveniKartonDTO zdravstveniKartonDTO = service.izlistajKarton(id);
             return new ResponseEntity(zdravstveniKartonDTO, HttpStatus.OK);
