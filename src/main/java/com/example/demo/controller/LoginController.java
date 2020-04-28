@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 //Kontroler zaduzen za autentifikaciju korisnika
+
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LoginController {
@@ -102,10 +104,11 @@ public class LoginController {
         return ResponseEntity.ok(new TokenStateDTO(jwt, expiresIn));
 
     }
-    @RequestMapping(value = "/promeniLozinku", method = RequestMethod.POST)
+    @PostMapping("/promeniLozinku")
     @PreAuthorize("hasAuthority('PACIJENT')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
 
+        
         if (passwordChanger == null){
             return new ResponseEntity<>("Uneli ste pograsne podatke", HttpStatus.BAD_REQUEST);
         }
