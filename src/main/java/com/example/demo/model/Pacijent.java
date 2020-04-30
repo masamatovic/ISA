@@ -1,53 +1,51 @@
 package com.example.demo.model;
 
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 /** @pdOid 387fc34c-1c83-4515-b3d6-6b89a40ef402 */
 
 @Entity
-public class Pacijent {
-   /** @pdOid 029246ac-6c2b-40fe-8e17-320b8b1cc0a5 */
+public class Pacijent implements UserDetails {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid d6e1c002-e540-4344-a867-fe78df844b24 */
    @Column(nullable = false)
    private String ime;
-   /** @pdOid d3e392ed-332f-4d1b-87fa-27330c825e2f */
    @Column(nullable = false)
    private String prezime;
-   /** @pdOid ef922d13-b5be-48c2-b4c7-aa61a6646584 */
    @Column(nullable = false)
    private String email;
-   /** @pdOid 7b8f4bef-79ad-4f26-9b25-92e26385e86e */
    @Column(nullable = false)
    private String lozinka;
-   /** @pdOid 4e928049-b70c-4b8e-8a49-5b4b03cb49e0 */
    @Column(nullable = false)
    private String adresa;
-   /** @pdOid 231fb435-9dd0-41ea-9dd3-a033a966f6b2 */
    @Column(nullable = false)
    private String grad;
-   /** @pdOid 9f13fa1e-12e4-43ff-a931-052fbf3af9b7 */
    @Column(nullable = false)
    private String drzava;
-   /** @pdOid abecafb1-9bdc-4c6d-9076-1e3c95551093 */
    @Column(nullable = false)
    private String telefon;
-   /** @pdOid b41f3dff-9493-49fd-b636-e52b1c8692be */
    @Column(nullable = false)
    private String jmbg;
    
-   /** @pdRoleInfo migr=no name=ZdravstveniKarton assc=association9 mult=1..1 */
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "karton_id", referencedColumnName = "id")
    public ZdravstveniKarton zdravstveniKarton;
-   /** @pdRoleInfo migr=no name=Pregled assc=association11 coll=java.util.List impl=java.util.ArrayList mult=0..* */
+
    //public java.util.List<Pregled> pregled;
-   /** @pdRoleInfo migr=no name=ZahtevZaPregled assc=association33 coll=java.util.List impl=java.util.ArrayList mult=0..* */
    //public java.util.List<ZahtevZaPregled> zahtevZaPregled;
+
+   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+   @JoinTable(name = "pacijent_authority",
+           joinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"),
+           inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+   private List<Authority> authorities;
 
 
    public Pacijent() {
@@ -139,6 +137,45 @@ public class Pacijent {
 
    public void setJmbg(String jmbg) {
       this.jmbg = jmbg;
+   }
+
+   public void setAuthorities(List<Authority> authorities) {
+      this.authorities = authorities;
+   }
+
+   @Override
+   public Collection<? extends GrantedAuthority> getAuthorities() {
+      return this.authorities;
+   }
+
+   @Override
+   public String getPassword() {
+      return this.lozinka;
+   }
+
+   @Override
+   public String getUsername() {
+      return this.email;
+   }
+
+   @Override
+   public boolean isAccountNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isAccountNonLocked() {
+      return true;
+   }
+
+   @Override
+   public boolean isCredentialsNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isEnabled() {
+      return true;
    }
 
    /*

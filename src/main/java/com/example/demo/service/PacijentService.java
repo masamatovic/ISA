@@ -18,6 +18,14 @@ public class PacijentService {
     @Autowired
     private PacijentRepository repository;
 
+    public PacijentDTO izlistajPacijenta(Long id){
+        Pacijent p = repository.findById(id).orElse(null);
+        if (p == null){
+            throw new  ValueException("Pacijent sa datim id-em ne postoji");
+        }
+        return new PacijentDTO(p);
+
+    }
 
     public Pacijent izmeni( PacijentDTO pdto){
         Pacijent p = repository.findById(pdto.getId()).orElse(null);
