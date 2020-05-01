@@ -23,14 +23,14 @@ INSERT INTO public.zdravstveni_karton(
 
 
 INSERT INTO public.pacijent(
-	 adresa, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon, karton_id)
-	VALUES ('Sekspirova 5', 'Srbija', 'masa@gmail.com', 'Novi Sad', 'Masa', '5050', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Matovic', '384', 1);
+	 adresa, aktivan,  drzava, email, grad, ime, jmbg, lozinka, prezime, telefon, karton_id)
+	VALUES ('Sekspirova 5', true, 'Srbija', 'masa@gmail.com', 'Novi Sad', 'Masa', '5050', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Matovic', '384', 1);
 INSERT INTO public.pacijent(
-	 adresa, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon,  karton_id)
-	VALUES ('Mirijevski Venac 10', 'Srbija', 'steva@gmail.com', 'Beograd', 'Stevan', '0409', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Matovic', '85093', 2);
+	 adresa, aktivan, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon,  karton_id)
+	VALUES ('Mirijevski Venac 10', true, 'Srbija', 'steva@gmail.com', 'Beograd', 'Stevan', '0409', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Matovic', '85093', 2);
 INSERT INTO public.pacijent(
-	 adresa, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon,  karton_id)
-	VALUES ('NJegoseva 12', 'Srbija', 'nemanja@gmail.com', 'Backa Palanka', 'Nemanja', '2105', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Kovacevic', '894204', 3);
+	 adresa, aktivan, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon,  karton_id)
+	VALUES ('NJegoseva 12', true, 'Srbija', 'nemanja@gmail.com', 'Backa Palanka', 'Nemanja', '2105', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Kovacevic', '894204', 3);
 
 
 

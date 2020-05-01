@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +34,11 @@ public class Pacijent implements UserDetails {
    private String telefon;
    @Column(nullable = false)
    private String jmbg;
-   
+   @Column(nullable = false)
+   private Boolean aktivan;
+
+
+   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "karton_id", referencedColumnName = "id")
    public ZdravstveniKarton zdravstveniKarton;
@@ -50,6 +55,18 @@ public class Pacijent implements UserDetails {
 
    public Pacijent() {
    }
+   public Pacijent(ZahtevZaRegistraciju zaRegistraciju) {
+      this.ime = zaRegistraciju.getIme();
+      this.prezime = zaRegistraciju.getPrezime();
+      this.email = zaRegistraciju.getEmail();
+      this.lozinka = zaRegistraciju.getLozinka();
+      this.adresa = zaRegistraciju.getAdresa();
+      this.grad = zaRegistraciju.getGrad();
+      this.drzava = zaRegistraciju.getDrzava();
+      this.jmbg = zaRegistraciju.getJmbg();
+      this.telefon = zaRegistraciju.getTelefon();
+   }
+
 
    public ZdravstveniKarton getZdravstveniKarton() {
       return zdravstveniKarton;
@@ -57,6 +74,14 @@ public class Pacijent implements UserDetails {
 
    public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
       this.zdravstveniKarton = zdravstveniKarton;
+   }
+
+   public Boolean getAktivan() {
+      return aktivan;
+   }
+
+   public void setAktivan(Boolean aktivan) {
+      this.aktivan = aktivan;
    }
 
    public Long getId() {
