@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.DoctorDTO;
 import com.example.demo.dto.KlinikaDTO;
+import com.example.demo.model.Doktor;
 import com.example.demo.model.Klinika;
 import com.example.demo.repository.KlinikaRepository;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -41,4 +43,23 @@ public class KlinikaService {
              return repository.findAll();
 
     }
+
+	public ArrayList<DoctorDTO> getAllDoctors(Long id) {
+		// TODO Auto-generated method stub
+		ArrayList<DoctorDTO> doctorDTOList = new ArrayList<>();
+		Klinika klinika = repository.findById(id).orElse(null);
+		
+		if(klinika == null) {
+			return null;
+		}
+		
+		List<Doktor> doctorList = klinika.getDoktori();
+		for(Doktor d : doctorList) {
+			doctorDTOList.add(new DoctorDTO(d));
+		}
+		
+		return doctorDTOList;
+		
+		
+	}
 }

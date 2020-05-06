@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.ForeignKey;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,6 +38,11 @@ public class AdministratorKlinike implements UserDetails {
            joinColumns = @JoinColumn(name = "adminklinike_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
    private List<Authority> authorities;
+   
+   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @JoinColumn(name = "klinika_id",referencedColumnName = "id")
+   private Klinika klinika;
+   
 
    ////////////// Geteri i seteri//////////////////
    public Long getId() {
@@ -202,7 +208,15 @@ public class AdministratorKlinike implements UserDetails {
          zahtevZaPregled.clear();
    }*/
 
-   /////////////////////// override metode za autorizaciju /////////////////////////////
+   public Klinika getKlinika() {
+	return klinika;
+}
+
+public void setKlinika(Klinika klinika) {
+	this.klinika = klinika;
+}
+
+/////////////////////// override metode za autorizaciju /////////////////////////////
    public void setAuthorities(List<Authority> authorities) {
       this.authorities = authorities;
    }

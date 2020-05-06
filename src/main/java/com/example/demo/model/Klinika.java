@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
+
 import javax.persistence.*;
 
 /** @pdOid f5c64885-5972-4252-9cf9-77a1412a0dc2 */
@@ -24,6 +26,16 @@ public class Klinika {
    /** @pdOid 1ed5d6dd-e5fb-4a59-be0c-7515f3d43a98 */
    @Column(nullable = false)
    private String opis;
+   
+   //administrator klinike
+   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @JoinColumn(name="admin_klinike")
+   private ArrayList<AdministratorKlinike> administratorKlinike;
+
+   @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+   @JoinColumn(name="doktori")
+   private ArrayList<Doktor> doktori;
+   
  /*
 
    public java.util.Collection<AdministratorKlinickogCentra> administratorKlinickogCentra;
@@ -39,7 +51,15 @@ public class Klinika {
    public java.util.Collection<Sala> sala;
    public java.util.List<Pregled> pregled;*/
 
-   public Long getId() {
+   public ArrayList<AdministratorKlinike> getAdministratorKlinike() {
+	return administratorKlinike;
+   }
+
+   public void setAdministratorKlinike(ArrayList<AdministratorKlinike> administratorKlinike) {
+	this.administratorKlinike = administratorKlinike;
+	}
+
+public Long getId() {
       return id;
    }
 
@@ -86,6 +106,14 @@ public class Klinika {
    public void setOpis(String opis) {
       this.opis = opis;
    }
+
+public ArrayList<Doktor> getDoktori() {
+	return doktori;
+}
+
+public void setDoktori(ArrayList<Doktor> doktori) {
+	this.doktori = doktori;
+}
 
  /*
    public java.util.Collection<AdministratorKlinickogCentra> getAdministratorKlinickogCentra() {
