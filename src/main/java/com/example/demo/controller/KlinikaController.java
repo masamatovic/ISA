@@ -4,7 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.service.KlinikaService;
-import com.sun.deploy.net.HttpResponse;
+//import com.sun.deploy.net.HttpResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
