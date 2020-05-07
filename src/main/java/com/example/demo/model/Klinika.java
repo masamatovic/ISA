@@ -1,8 +1,17 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /** @pdOid f5c64885-5972-4252-9cf9-77a1412a0dc2 */
 @Entity
@@ -30,11 +39,11 @@ public class Klinika {
    //administrator klinike
    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    @JoinColumn(name="admin_klinike")
-   private ArrayList<AdministratorKlinike> administratorKlinike;
+   private List<AdministratorKlinike> administratorKlinike;
 
    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
    @JoinColumn(name="doktori")
-   private ArrayList<Doktor> doktori;
+   private List<Doktor> doktori;
    
  /*
 
@@ -51,11 +60,11 @@ public class Klinika {
    public java.util.Collection<Sala> sala;
    public java.util.List<Pregled> pregled;*/
 
-   public ArrayList<AdministratorKlinike> getAdministratorKlinike() {
+   public List<AdministratorKlinike> getAdministratorKlinike() {
 	return administratorKlinike;
    }
 
-   public void setAdministratorKlinike(ArrayList<AdministratorKlinike> administratorKlinike) {
+   public void setAdministratorKlinike(List<AdministratorKlinike> administratorKlinike) {
 	this.administratorKlinike = administratorKlinike;
 	}
 
@@ -107,11 +116,11 @@ public Long getId() {
       this.opis = opis;
    }
 
-public ArrayList<Doktor> getDoktori() {
+public List<Doktor> getDoktori() {
 	return doktori;
 }
 
-public void setDoktori(ArrayList<Doktor> doktori) {
+public void setDoktori(List<Doktor> doktori) {
 	this.doktori = doktori;
 }
 
