@@ -24,24 +24,23 @@ public class Pregled {
    @Column
    public String popust;
 
-   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    @JoinColumn(name = "tip_pregleda_id")
    private TipPregleda tip;
 
-   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-   @JoinColumn(name = "sala_klinike_id")
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "sala_id")
    private Sala sala;
 
-
-   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    @JoinColumn(name = "doktor_id")
    private Doktor doktor;
 
-   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    @JoinColumn(name = "pacijent_id")
    private Pacijent pacijent;
 
-   // public IzvestajOPregledu izvestajOPregledu;
+   //public IzvestajOPregledu izvestajOPregledu;
 
 
    public Pregled() {
@@ -128,7 +127,7 @@ public class Pregled {
    }
    
 
-  /* public void setDoktor(Doktor newDoktor) {
+ /*  public void setDoktor(Doktor newDoktor) {
       if (this.doktor == null || !this.doktor.equals(newDoktor))
       {
          if (this.doktor != null)
@@ -143,6 +142,6 @@ public class Pregled {
             this.doktor.addPregled(this);
          }
       }
-   }*/
+*/
 
 }

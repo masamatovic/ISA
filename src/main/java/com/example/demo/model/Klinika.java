@@ -49,11 +49,11 @@ public class Klinika {
    private List<Doktor> doktori;
 
    @OnDelete(action = OnDeleteAction.CASCADE)
-   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
    public java.util.Collection<Sala> sala;
 
    @OnDelete(action = OnDeleteAction.CASCADE)
-   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
    private List<TipPregleda> tipPregleda;
 
 
