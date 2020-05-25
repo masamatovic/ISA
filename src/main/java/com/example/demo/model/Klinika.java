@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +19,23 @@ import javax.persistence.OneToMany;
 /** @pdOid f5c64885-5972-4252-9cf9-77a1412a0dc2 */
 @Entity
 public class Klinika {
-   /** @pdOid 7c641235-aacc-42ef-a092-04aef2c42dd3 */
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid 6ad4a8ad-3a5a-4191-9eb7-f16af6b3683d */
+
    @Column(nullable = false)
    private String naziv;
-   /** @pdOid a79bd191-9962-4dd1-9349-7043a36bccd5 */
+
    @Column(nullable = false)
    private String adresa;
-   /** @pdOid 184ff948-c5f6-4476-90a6-3f0cad1b4fcd */
+
    @Column(nullable = false)
    private String grad;
-   /** @pdOid 7d7c4f46-e8b6-49fb-8933-5acdc8e22d75 */
+
    @Column(nullable = false)
    private String drzava;
-   /** @pdOid 1ed5d6dd-e5fb-4a59-be0c-7515f3d43a98 */
+
    @Column(nullable = false)
    private String opis;
    
@@ -44,20 +47,26 @@ public class Klinika {
    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
    @JoinColumn(name="doktori")
    private List<Doktor> doktori;
-   
- /*
+
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+   public java.util.Collection<Sala> sala;
+
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+   private List<TipPregleda> tipPregleda;
+
+
+   /*
 
    public java.util.Collection<AdministratorKlinickogCentra> administratorKlinickogCentra;
 
-   public java.util.Collection<AdministratorKlinike> administratorKlinike;
 
    public java.util.Collection<Pacijent> pacijent;
 
    public java.util.List<MedicinskaSestra> medicinskaSestra;
 
-   public java.util.List<Doktor> doktor;
 
-   public java.util.Collection<Sala> sala;
    public java.util.List<Pregled> pregled;*/
 
    public List<AdministratorKlinike> getAdministratorKlinike() {
@@ -68,7 +77,7 @@ public class Klinika {
 	this.administratorKlinike = administratorKlinike;
 	}
 
-public Long getId() {
+   public Long getId() {
       return id;
    }
 
@@ -116,13 +125,67 @@ public Long getId() {
       this.opis = opis;
    }
 
-public List<Doktor> getDoktori() {
+   public List<Doktor> getDoktori() {
 	return doktori;
 }
 
-public void setDoktori(List<Doktor> doktori) {
+   public void setDoktori(List<Doktor> doktori) {
 	this.doktori = doktori;
 }
+
+   public java.util.Collection<Sala> getSala() {
+      if (sala == null)
+         sala = new java.util.HashSet<Sala>();
+      return sala;
+   }
+
+   public java.util.Iterator getIteratorSala() {
+      if (sala == null)
+         sala = new java.util.HashSet<Sala>();
+      return sala.iterator();
+   }
+
+   public void setSala(java.util.Collection<Sala> newSala) {
+      removeAllSala();
+      for (java.util.Iterator iter = newSala.iterator(); iter.hasNext();)
+         addSala((Sala)iter.next());
+   }
+
+   public void addSala(Sala newSala) {
+      if (newSala == null)
+         return;
+      if (this.sala == null)
+         this.sala = new java.util.HashSet<Sala>();
+      if (!this.sala.contains(newSala))
+      {
+         this.sala.add(newSala);
+         newSala.setKlinika(this);
+      }
+   }
+
+   public void removeSala(Sala oldSala) {
+      if (oldSala == null)
+         return;
+      if (this.sala != null)
+         if (this.sala.contains(oldSala))
+         {
+            this.sala.remove(oldSala);
+            oldSala.setKlinika((Klinika)null);
+         }
+   }
+
+   public void removeAllSala() {
+      if (sala != null)
+      {
+         Sala oldSala;
+         for (java.util.Iterator iter = getIteratorSala(); iter.hasNext();)
+         {
+            oldSala = (Sala)iter.next();
+            iter.remove();
+            oldSala.setKlinika((Klinika)null);
+         }
+      }
+   }
 
  /*
    public java.util.Collection<AdministratorKlinickogCentra> getAdministratorKlinickogCentra() {
@@ -326,59 +389,7 @@ public void setDoktori(List<Doktor> doktori) {
       if (doktor != null)
          doktor.clear();
    }
-   public java.util.Collection<Sala> getSala() {
-      if (sala == null)
-         sala = new java.util.HashSet<Sala>();
-      return sala;
-   }
-   
-   public java.util.Iterator getIteratorSala() {
-      if (sala == null)
-         sala = new java.util.HashSet<Sala>();
-      return sala.iterator();
-   }
-   
-   public void setSala(java.util.Collection<Sala> newSala) {
-      removeAllSala();
-      for (java.util.Iterator iter = newSala.iterator(); iter.hasNext();)
-         addSala((Sala)iter.next());
-   }
-   
-   public void addSala(Sala newSala) {
-      if (newSala == null)
-         return;
-      if (this.sala == null)
-         this.sala = new java.util.HashSet<Sala>();
-      if (!this.sala.contains(newSala))
-      {
-         this.sala.add(newSala);
-         newSala.setKlinika(this);      
-      }
-   }
-   
-   public void removeSala(Sala oldSala) {
-      if (oldSala == null)
-         return;
-      if (this.sala != null)
-         if (this.sala.contains(oldSala))
-         {
-            this.sala.remove(oldSala);
-            oldSala.setKlinika((Klinika)null);
-         }
-   }
-   
-   public void removeAllSala() {
-      if (sala != null)
-      {
-         Sala oldSala;
-         for (java.util.Iterator iter = getIteratorSala(); iter.hasNext();)
-         {
-            oldSala = (Sala)iter.next();
-            iter.remove();
-            oldSala.setKlinika((Klinika)null);
-         }
-      }
-   }
+
    public java.util.List<Pregled> getPregled() {
       if (pregled == null)
          pregled = new java.util.ArrayList<Pregled>();
