@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,11 +39,11 @@ public class Doktor implements UserDetails {
            joinColumns = @JoinColumn(name = "doktor_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
    private List<Authority> authorities;
-   
-   
-  @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-   @JoinColumn(name = "klinika_id")
-   private Klinika klinika;
+
+ //   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name = "klinika_id")
+    private Klinika klinika;
 
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
@@ -133,7 +134,15 @@ public class Doktor implements UserDetails {
       this.jmbg = jmbg;
    }
 
-   public void setAuthorities(List<Authority> authorities) {
+    public Klinika getKlinika() {
+        return klinika;
+    }
+
+    public void setKlinika(Klinika klinika) {
+        this.klinika = klinika;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
       this.authorities = authorities;
    }
 

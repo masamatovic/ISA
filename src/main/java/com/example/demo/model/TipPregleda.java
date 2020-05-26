@@ -34,11 +34,11 @@ public class TipPregleda {
       this.naziv = naziv;
    }
 
- /*  public Klinika getKlinika() {
+  public Klinika getKlinika() {
       return klinika;
    }
 
    public void setKlinika(Klinika klinika) {
       this.klinika = klinika;
-   }*/
+   }
 }

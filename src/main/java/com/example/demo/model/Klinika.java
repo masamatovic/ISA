@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -40,13 +41,13 @@ public class Klinika {
    private String opis;
    
    //administrator klinike
-   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-   @JoinColumn(name="admin_klinike")
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
    private List<AdministratorKlinike> administratorKlinike;
 
-   @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-   @JoinColumn(name="doktori")
-   private List<Doktor> doktori;
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
+   private List<Doktor> doktor;
 
    @OnDelete(action = OnDeleteAction.CASCADE)
    @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
@@ -68,6 +69,9 @@ public class Klinika {
 
 
    public java.util.List<Pregled> pregled;*/
+
+   public Klinika() {
+   }
 
    public List<AdministratorKlinike> getAdministratorKlinike() {
 	return administratorKlinike;
@@ -125,14 +129,6 @@ public class Klinika {
       this.opis = opis;
    }
 
-   public List<Doktor> getDoktori() {
-	return doktori;
-}
-
-   public void setDoktori(List<Doktor> doktori) {
-	this.doktori = doktori;
-}
-
    public java.util.Collection<Sala> getSala() {
       if (sala == null)
          sala = new java.util.HashSet<Sala>();
@@ -185,6 +181,45 @@ public class Klinika {
             oldSala.setKlinika((Klinika)null);
          }
       }
+   }
+   public java.util.List<Doktor> getDoktor() {
+      if (doktor == null)
+         doktor = new java.util.ArrayList<Doktor>();
+      return doktor;
+   }
+
+   public java.util.Iterator getIteratorDoktor() {
+      if (doktor == null)
+         doktor = new java.util.ArrayList<Doktor>();
+      return doktor.iterator();
+   }
+
+   public void setDoktor(java.util.List<Doktor> newDoktor) {
+      removeAllDoktor();
+      for (java.util.Iterator iter = newDoktor.iterator(); iter.hasNext();)
+         addDoktor((Doktor)iter.next());
+   }
+
+   public void addDoktor(Doktor newDoktor) {
+      if (newDoktor == null)
+         return;
+      if (this.doktor == null)
+         this.doktor = new java.util.ArrayList<Doktor>();
+      if (!this.doktor.contains(newDoktor))
+         this.doktor.add(newDoktor);
+   }
+
+   public void removeDoktor(Doktor oldDoktor) {
+      if (oldDoktor == null)
+         return;
+      if (this.doktor != null)
+         if (this.doktor.contains(oldDoktor))
+            this.doktor.remove(oldDoktor);
+   }
+
+   public void removeAllDoktor() {
+      if (doktor != null)
+         doktor.clear();
    }
 
  /*
@@ -350,45 +385,7 @@ public class Klinika {
       if (medicinskaSestra != null)
          medicinskaSestra.clear();
    }
-   public java.util.List<Doktor> getDoktor() {
-      if (doktor == null)
-         doktor = new java.util.ArrayList<Doktor>();
-      return doktor;
-   }
-   
-   public java.util.Iterator getIteratorDoktor() {
-      if (doktor == null)
-         doktor = new java.util.ArrayList<Doktor>();
-      return doktor.iterator();
-   }
-   
-   public void setDoktor(java.util.List<Doktor> newDoktor) {
-      removeAllDoktor();
-      for (java.util.Iterator iter = newDoktor.iterator(); iter.hasNext();)
-         addDoktor((Doktor)iter.next());
-   }
-   
-   public void addDoktor(Doktor newDoktor) {
-      if (newDoktor == null)
-         return;
-      if (this.doktor == null)
-         this.doktor = new java.util.ArrayList<Doktor>();
-      if (!this.doktor.contains(newDoktor))
-         this.doktor.add(newDoktor);
-   }
-   
-   public void removeDoktor(Doktor oldDoktor) {
-      if (oldDoktor == null)
-         return;
-      if (this.doktor != null)
-         if (this.doktor.contains(oldDoktor))
-            this.doktor.remove(oldDoktor);
-   }
-   
-   public void removeAllDoktor() {
-      if (doktor != null)
-         doktor.clear();
-   }
+
 
    public java.util.List<Pregled> getPregled() {
       if (pregled == null)
