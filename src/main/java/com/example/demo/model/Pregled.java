@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,10 +21,13 @@ public class Pregled {
    private Double trajanje;
 
    @Column
-   public String cena;
+   private String cena;
 
    @Column
-   public String popust;
+   private String popust;
+
+   @Column
+   private boolean odobren;
 
    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    @JoinColumn(name = "tip_pregleda_id")
@@ -40,10 +45,29 @@ public class Pregled {
    @JoinColumn(name = "pacijent_id")
    private Pacijent pacijent;
 
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "klinika_id")
+   private Klinika klinika;
    //public IzvestajOPregledu izvestajOPregledu;
 
 
    public Pregled() {
+   }
+
+   public Klinika getKlinika() {
+      return klinika;
+   }
+
+   public void setKlinika(Klinika klinika) {
+      this.klinika = klinika;
+   }
+
+   public boolean isOdobren() {
+      return odobren;
+   }
+
+   public void setOdobren(boolean odobren) {
+      this.odobren = odobren;
    }
 
    public Long getId() {
@@ -109,6 +133,8 @@ public class Pregled {
    public void setSala(Sala sala) {
       this.sala = sala;
    }
+
+
 
    public void setDoktor(Doktor doktor) {
       this.doktor = doktor;

@@ -46,9 +46,9 @@ public class Sala {
       this.broj = broj;
    }
 
- //  public Klinika getKlinika() {
-  //    return klinika;
-  // }
+   public Klinika getKlinika() {
+      return klinika;
+  }
 
 
 
