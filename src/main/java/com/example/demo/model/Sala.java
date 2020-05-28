@@ -15,6 +15,14 @@ public class Sala {
 
    @Column
    private String broj;
+   
+   //da li je sala za pregled ili operaciju, ovo je obicni flag koji na to pokazuje
+   @Column
+   private boolean vrstaSale;
+   
+   /**
+    *TODO: sale i doktori
+    * */
 
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    public Klinika klinika;
@@ -68,5 +76,13 @@ public class Sala {
          }
       }
    }
+
+	public boolean isVrstaSale() {
+		return vrstaSale;
+	}
+	
+	public void setVrstaSale(boolean vrstaSale) {
+		this.vrstaSale = vrstaSale;
+	}
 
 }
