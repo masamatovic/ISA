@@ -3,15 +3,19 @@ package com.example.demo.controller;
 
 import java.util.Collection;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ValidationException;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.TokenStateDTO;
 import com.example.demo.dto.ZahtevZaAutentikacijuDTO;
 import com.example.demo.model.*;
 import com.example.demo.security.TokenUtils;
 import com.example.demo.service.CustomUserDetailsService;
+import com.example.demo.service.PacijentService;
+import com.example.demo.service.ZahtevZaRegistracijuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-
+//Kontroler u kome se nalze putanje kojima mogu pristuiti svi korisnici!!!
 //Kontroler zaduzen za autentifikaciju korisnika
 
 @CrossOrigin
@@ -39,6 +43,12 @@ public class LoginController {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private PacijentService pacijentService;
+
+    @Autowired
+    private ZahtevZaRegistracijuService zahtevZaRegistracijuService;
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -104,11 +114,51 @@ public class LoginController {
         return ResponseEntity.ok(new TokenStateDTO(jwt, expiresIn));
 
     }
+    @PostMapping("/zahtevZaRegistraciju")
+    public ResponseEntity registracija(@RequestBody PacijentDTO pacijentDTO) {
+
+        if (pacijentDTO == null){
+            return  new ResponseEntity("Pogresno poslati podaci", HttpStatus.BAD_REQUEST);
+        }
+
+        PacijentDTO pacijent = this.pacijentService.izlistajPacijenta(pacijentDTO.getEmail());
+        if (pacijent != null) {
+            return new ResponseEntity<>("Vec postoji korisnik sa ovim email-om.", HttpStatus.CONFLICT);
+        }
+        ZahtevZaRegistraciju zahtevZaRegistraciju = new ZahtevZaRegistraciju();
+        try {
+             zahtevZaRegistraciju  = this.zahtevZaRegistracijuService.posaljiZahtev(pacijentDTO);
+        } catch (ValidationException e){
+            return new ResponseEntity<>("Vec postoji zahtev sa ovim emailom", HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(zahtevZaRegistraciju, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/aktivacijaPacijenta/{id}")
+    public ResponseEntity aktivacijaPacijenta(@PathVariable Long id) {
+
+        if (id == null){
+            return  new ResponseEntity("Pogresno poslati podaci", HttpStatus.BAD_REQUEST);
+        }
+        ZahtevZaRegistraciju zahtevZaRegistraciju = new ZahtevZaRegistraciju();
+        Pacijent pacijent;
+        try {
+           pacijent = zahtevZaRegistracijuService.aktivacijaPacijenta(id);
+        } catch (ValidationException e){
+            return new ResponseEntity<>("Ne postoji pacijent sa ovim idem", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        return new ResponseEntity<>(pacijent, HttpStatus.OK);
+    }
+
+
+
     @PostMapping("/promeniLozinku")
-    @PreAuthorize("hasAuthority('PACIJENT')")
+ //   @PreAuthorize("hasAuthority('PACIJENT')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
 
-        
+
         if (passwordChanger == null){
             return new ResponseEntity<>("Uneli ste pograsne podatke", HttpStatus.BAD_REQUEST);
         }
@@ -123,4 +173,5 @@ public class LoginController {
         public String oldPassword;
         public String newPassword;
     }
+
     }

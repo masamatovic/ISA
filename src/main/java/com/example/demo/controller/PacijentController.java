@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.ZdravstveniKartonDTO;
 import com.example.demo.model.Pacijent;
+import com.example.demo.model.ZahtevZaRegistraciju;
 import com.example.demo.model.ZdravstveniKarton;
 import com.example.demo.service.PacijentService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.websocket.server.PathParam;
+import javax.validation.ValidationException;
 import javax.xml.ws.Response;
 
 @CrossOrigin
@@ -24,6 +26,7 @@ public class PacijentController {
 
     @Autowired
     private PacijentService service;
+
 
     @GetMapping(path = "/izlistajPacijenta/{id}")
     @PreAuthorize("hasAuthority('PACIJENT')")
@@ -55,6 +58,7 @@ public class PacijentController {
     }
 
     @GetMapping(path = "/izlistajKarton/{id}", produces = "application/json")
+    @PreAuthorize("hasAuthority('PACIJENT')")
     public ResponseEntity izlistajKarton(@PathVariable Long id){
         try {
             ZdravstveniKartonDTO zdravstveniKartonDTO = service.izlistajKarton(id);

@@ -1,36 +1,159 @@
 package com.example.demo.model;
 
-/** @pdOid d7b7241a-3fc2-42ca-91f8-4fed09a3c075 */
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
 public class Pregled {
-   /** @pdOid 35bdcc99-0c7f-4f75-98ad-9cbaa7ff1365 */
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid 7746576c-5747-4dc7-b5a5-5efb9a0e56db */
+
+   @Column
    private String datum;
-   /** @pdOid a3132e6a-162d-4d90-941c-bac7c60834a1 */
+
+   @Column
    private String vreme;
-   /** @pdOid 6febd3ea-3a70-454f-a1e5-6763a8cfcebf */
-   private TipPregleda tip;
-   /** @pdOid bf7af466-d8fd-4f92-9745-babdf23ac99b */
+
+   @Column
    private Double trajanje;
-   /** @pdOid 479c17df-ea78-4683-a6d8-4cc4e3d4b216 */
+
+   @Column
+   private String cena;
+
+   @Column
+   private String popust;
+
+   @Column
+   private boolean odobren;
+
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "tip_pregleda_id")
+   private TipPregleda tip;
+
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "sala_id")
    private Sala sala;
-   /** @pdOid 6be42aa4-88f7-4b40-a1cf-e6b2a7d34142 */
-   private int attribute7;
-   
-   /** @pdRoleInfo migr=no name=IzvestajOPregledu assc=association27 mult=1..1 */
-   public IzvestajOPregledu izvestajOPregledu;
-   /** @pdRoleInfo migr=no name=Doktor assc=association40 mult=1..1 side=A */
-   public Doktor doktor;
-   
-   
-   /** @pdGenerated default parent getter */
+
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "doktor_id")
+   private Doktor doktor;
+
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "pacijent_id")
+   private Pacijent pacijent;
+
+   @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @JoinColumn(name = "klinika_id")
+   private Klinika klinika;
+   //public IzvestajOPregledu izvestajOPregledu;
+
+
+   public Pregled() {
+   }
+
+   public Klinika getKlinika() {
+      return klinika;
+   }
+
+   public void setKlinika(Klinika klinika) {
+      this.klinika = klinika;
+   }
+
+   public boolean isOdobren() {
+      return odobren;
+   }
+
+   public void setOdobren(boolean odobren) {
+      this.odobren = odobren;
+   }
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public String getDatum() {
+      return datum;
+   }
+
+   public void setDatum(String datum) {
+      this.datum = datum;
+   }
+
+   public String getVreme() {
+      return vreme;
+   }
+
+   public void setVreme(String vreme) {
+      this.vreme = vreme;
+   }
+
+   public Double getTrajanje() {
+      return trajanje;
+   }
+
+   public void setTrajanje(Double trajanje) {
+      this.trajanje = trajanje;
+   }
+
+   public String getCena() {
+      return cena;
+   }
+
+   public void setCena(String cena) {
+      this.cena = cena;
+   }
+
+   public String getPopust() {
+      return popust;
+   }
+
+   public void setPopust(String popust) {
+      this.popust = popust;
+   }
+
+   public TipPregleda getTip() {
+      return tip;
+   }
+
+   public void setTip(TipPregleda tip) {
+      this.tip = tip;
+   }
+
+   public Sala getSala() {
+      return sala;
+   }
+
+   public void setSala(Sala sala) {
+      this.sala = sala;
+   }
+
+
+
+   public void setDoktor(Doktor doktor) {
+      this.doktor = doktor;
+   }
+
+   public Pacijent getPacijent() {
+      return pacijent;
+   }
+
+   public void setPacijent(Pacijent pacijent) {
+      this.pacijent = pacijent;
+   }
+
    public Doktor getDoktor() {
       return doktor;
    }
    
-   /** @pdGenerated default parent setter
-     * @param newDoktor */
-  /* public void setDoktor(Doktor newDoktor) {
+
+ /*  public void setDoktor(Doktor newDoktor) {
       if (this.doktor == null || !this.doktor.equals(newDoktor))
       {
          if (this.doktor != null)
@@ -45,6 +168,6 @@ public class Pregled {
             this.doktor.addPregled(this);
          }
       }
-   }*/
+*/
 
 }

@@ -53,7 +53,7 @@ public class KlinikaService {
 			return null;
 		}
 		
-		List<Doktor> doctorList = klinika.getDoktori();
+		List<Doktor> doctorList = klinika.getDoktor();
 		for(Doktor d : doctorList) {
 			doctorDTOList.add(new DoctorDTO(d));
 		}

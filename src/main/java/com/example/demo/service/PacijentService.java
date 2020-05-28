@@ -4,13 +4,16 @@ package com.example.demo.service;
 import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.ZdravstveniKartonDTO;
 import com.example.demo.model.Pacijent;
+import com.example.demo.model.ZahtevZaRegistraciju;
 import com.example.demo.model.ZdravstveniKarton;
 import com.example.demo.repository.PacijentRepository;
+import com.example.demo.repository.ZahtevZaRegistracijuRepository;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
 
 @Service
 public class PacijentService {
@@ -22,6 +25,14 @@ public class PacijentService {
         Pacijent p = repository.findById(id).orElse(null);
         if (p == null){
             throw new  ValueException("Pacijent sa datim id-em ne postoji");
+        }
+        return new PacijentDTO(p);
+
+    }
+    public PacijentDTO izlistajPacijenta(String email){
+        Pacijent p = repository.findByEmail(email);
+        if (p==null){
+            return null;
         }
         return new PacijentDTO(p);
 
@@ -62,4 +73,5 @@ public class PacijentService {
         return zdravstveniKartonDTO;
 
     }
+
 }
