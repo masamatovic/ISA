@@ -73,6 +73,15 @@ public class Klinika {
    public Klinika() {
    }
 
+
+   public List<TipPregleda> getTipPregleda() {
+      return tipPregleda;
+   }
+
+   public void setTipPregleda(List<TipPregleda> tipPregleda) {
+      this.tipPregleda = tipPregleda;
+   }
+
    public List<AdministratorKlinike> getAdministratorKlinike() {
 	return administratorKlinike;
    }
