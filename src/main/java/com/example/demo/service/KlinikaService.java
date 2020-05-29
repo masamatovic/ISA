@@ -70,6 +70,7 @@ public class KlinikaService {
 		
 		return doctorDTOList;
 	}
+
 	public ArrayList<TipPregledaDTO> izlistajTipovePregledaKlinike (Long id){
         Klinika klinika = repository.findById(id).orElse(null);
 
@@ -83,4 +84,12 @@ public class KlinikaService {
         }
         return tipPregledaDTOS;
     }
+
+	public Klinika findClinic(Long id) {
+		Klinika k = repository.findById(id).orElse(null);
+		
+		return k;
+		
+	}
+
 }

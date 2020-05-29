@@ -12,11 +12,14 @@ public class SalaDTO {
     private String naziv;
 
     private String broj;
+    
+    private boolean vrstaSale;
 
     public SalaDTO(Sala sala) {
         this.id = sala.getId();
         this.naziv = sala.getNaziv();
         this.broj = sala.getBroj();
+        this.vrstaSale = sala.isVrstaSale();
     }
 
     public Long getId() {
@@ -42,4 +45,12 @@ public class SalaDTO {
     public void setBroj(String broj) {
         this.broj = broj;
     }
+
+	public boolean isVrstaSale() {
+		return vrstaSale;
+	}
+
+	public void setVrstaSale(boolean vrstaSale) {
+		this.vrstaSale = vrstaSale;
+	}
 }
