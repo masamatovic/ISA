@@ -135,7 +135,7 @@ public class Klinika {
       return sala;
    }
 
-   public java.util.Iterator getIteratorSala() {
+   public java.util.Iterator<Sala> getIteratorSala() {
       if (sala == null)
          sala = new java.util.HashSet<Sala>();
       return sala.iterator();
@@ -143,8 +143,8 @@ public class Klinika {
 
    public void setSala(java.util.Collection<Sala> newSala) {
       removeAllSala();
-      for (java.util.Iterator iter = newSala.iterator(); iter.hasNext();)
-         addSala((Sala)iter.next());
+      for (java.util.Iterator<Sala> iter = newSala.iterator(); iter.hasNext();)
+         addSala(iter.next());
    }
 
    public void addSala(Sala newSala) {
@@ -174,9 +174,9 @@ public class Klinika {
       if (sala != null)
       {
          Sala oldSala;
-         for (java.util.Iterator iter = getIteratorSala(); iter.hasNext();)
+         for (java.util.Iterator<Sala> iter = getIteratorSala(); iter.hasNext();)
          {
-            oldSala = (Sala)iter.next();
+            oldSala = iter.next();
             iter.remove();
             oldSala.setKlinika((Klinika)null);
          }
@@ -188,7 +188,7 @@ public class Klinika {
       return doktor;
    }
 
-   public java.util.Iterator getIteratorDoktor() {
+   public java.util.Iterator<Doktor> getIteratorDoktor() {
       if (doktor == null)
          doktor = new java.util.ArrayList<Doktor>();
       return doktor.iterator();
@@ -196,8 +196,8 @@ public class Klinika {
 
    public void setDoktor(java.util.List<Doktor> newDoktor) {
       removeAllDoktor();
-      for (java.util.Iterator iter = newDoktor.iterator(); iter.hasNext();)
-         addDoktor((Doktor)iter.next());
+      for (java.util.Iterator<Doktor> iter = newDoktor.iterator(); iter.hasNext();)
+         addDoktor(iter.next());
    }
 
    public void addDoktor(Doktor newDoktor) {

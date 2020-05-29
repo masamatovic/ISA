@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.DoctorDTO;
 import com.example.demo.model.Doktor;
+import com.example.demo.model.Klinika;
 import com.example.demo.repository.DoktorRepository;
+
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 
@@ -16,7 +18,7 @@ public class DoctorService {
 	@Autowired
 	private DoktorRepository repository;
 
-	public void addDoctor(DoctorDTO dDTO) {
+	public void addDoctor(DoctorDTO dDTO,Klinika klinika) {
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
 		try {
@@ -29,6 +31,9 @@ public class DoctorService {
 			d.setTelefon(dDTO.getTelefon());
 			d.setDrzava(dDTO.getDrzava());
 			d.setJmbg(dDTO.getJmbg());
+			if(klinika != null) {
+				d.setKlinika(klinika);
+			}
 			
 			repository.save(d);
 			

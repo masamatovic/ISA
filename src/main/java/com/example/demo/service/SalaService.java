@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,8 @@ public class SalaService {
 			s.setBroj(sDTO.getBroj());
 			s.setNaziv(sDTO.getNaziv());
 			s.setVrstaSale(sDTO.isVrstaSale());
+			s.setDatumZauzeca(sDTO.getDatumZauzeca());
+			s.setZauzece(sDTO.isZauzece());
 			if(klinika != null) {
 				s.setKlinika(klinika);
 			}
@@ -53,7 +58,7 @@ public class SalaService {
 	}
 	
 	//delete sala
-	public Sala deleteSala(Long id) {
+	public Sala deleteSala(Long id, Klinika klinika) {
 		Sala sala = repository.findById(id).orElse(null);
 		if(sala == null) {
 			throw new ValueException("Sala je nepostojeca");
@@ -61,6 +66,7 @@ public class SalaService {
 		}
 		
 		try {
+			klinika.removeSala(sala);
 			repository.delete(sala);
 		}
 		catch(Exception e){
@@ -78,6 +84,8 @@ public class SalaService {
 			s.setBroj(sDTO.getBroj());
 			s.setNaziv(sDTO.getNaziv());
 			s.setVrstaSale(sDTO.isVrstaSale());
+			s.setDatumZauzeca(sDTO.getDatumZauzeca());
+			s.setZauzece(sDTO.isZauzece());
 			s.setKlinika(klinika);
 			repository.save(s);
 			
@@ -88,6 +96,8 @@ public class SalaService {
 		
 		return new SalaDTO(s);
 	}
+	
+	
 	
 	
 	

@@ -3,6 +3,8 @@ package com.example.demo.dto;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Sala;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 public class SalaDTO {
@@ -14,12 +16,17 @@ public class SalaDTO {
     private String broj;
     
     private boolean vrstaSale;
+    
+    private boolean zauzece;
+    private Date datumZauzeca;
 
     public SalaDTO(Sala sala) {
         this.id = sala.getId();
         this.naziv = sala.getNaziv();
         this.broj = sala.getBroj();
         this.vrstaSale = sala.isVrstaSale();
+        this.zauzece = sala.isZauzece();
+        this.datumZauzeca = sala.getDatumZauzeca();
     }
 
     public Long getId() {
@@ -52,5 +59,21 @@ public class SalaDTO {
 
 	public void setVrstaSale(boolean vrstaSale) {
 		this.vrstaSale = vrstaSale;
+	}
+
+	public boolean isZauzece() {
+		return zauzece;
+	}
+
+	public void setZauzece(boolean zauzece) {
+		this.zauzece = zauzece;
+	}
+
+	public Date getDatumZauzeca() {
+		return datumZauzeca;
+	}
+
+	public void setDatumZauzeca(Date datumZauzeca) {
+		this.datumZauzeca = datumZauzeca;
 	}
 }

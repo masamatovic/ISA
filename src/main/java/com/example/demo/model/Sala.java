@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,6 +25,12 @@ public class Sala {
    /**
     *TODO: sale i doktori
     * */
+   
+   @Column
+   private boolean zauzece;
+   
+   @Column
+   private Date datumZauzeca;
 
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    public Klinika klinika;
@@ -83,6 +91,22 @@ public class Sala {
 	
 	public void setVrstaSale(boolean vrstaSale) {
 		this.vrstaSale = vrstaSale;
+	}
+
+	public boolean isZauzece() {
+		return zauzece;
+	}
+
+	public void setZauzece(boolean zauzece) {
+		this.zauzece = zauzece;
+	}
+
+	public Date getDatumZauzeca() {
+		return datumZauzeca;
+	}
+
+	public void setDatumZauzeca(Date datumZauzeca) {
+		this.datumZauzeca = datumZauzeca;
 	}
 
 }
