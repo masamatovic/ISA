@@ -62,4 +62,11 @@ public class KlinikaService {
 		
 		
 	}
+	
+	public Klinika findClinic(Long id) {
+		Klinika k = repository.findById(id).orElse(null);
+		
+		return k;
+		
+	}
 }
