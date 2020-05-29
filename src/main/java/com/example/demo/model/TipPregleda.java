@@ -12,6 +12,11 @@ public class TipPregleda {
    @Column
    private String naziv;
 
+   /**
+    * TODO: sifranink pregleda
+    * */
+   
+   
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    private Klinika klinika;
 
