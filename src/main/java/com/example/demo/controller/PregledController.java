@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PregledDTO;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.PregledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,9 @@ public class PregledController {
     @Autowired
     PregledService pregledService;
 
+    @Autowired
+    EmailService emailService;
+
     @GetMapping(path = "/izlistajUDPreglede/{id}")
     @PreAuthorize("hasAuthority('ADMIN_KCENTRA') or hasAuthority('PACIJENT')")
     public ResponseEntity izlistajUnapredDefPreglede(@PathVariable Long id) {
@@ -34,7 +39,7 @@ public class PregledController {
         }
     }
 
-    @PutMapping(path="/reservisiUD/{pregled_id}/{pacijent_id}", consumes = "application/json", produces= "application/json")
+    @PutMapping(path="/reservisiUD/{pregled_id}/{pacijent_id}")
     @PreAuthorize("hasAuthority('PACIJENT')")
     public ResponseEntity zakaziUDPregled(@PathVariable Long pregled_id, @PathVariable Long pacijent_id) {
 
@@ -47,7 +52,15 @@ public class PregledController {
 
         try {
             PregledDTO pregledDTO = pregledService.zakaziUDPregled(pacijent_id, pregled_id);
-            //this.emailService.sendAvailableAppointmentScheduled(appointmentDTO);
+
+            try {
+                emailService.posaljiMail(pregledDTO);
+            } catch (MailException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             return new ResponseEntity<>(pregledDTO, HttpStatus.OK);
         } catch (ValidationException | NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
