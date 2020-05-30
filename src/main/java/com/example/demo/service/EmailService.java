@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.PregledDTO;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.ZahtevZaRegistraciju;
 import org.springframework.core.env.Environment;
@@ -54,5 +55,26 @@ public class EmailService {
 
         System.out.println("Email poslat!");
     }
+    @Async
+    public void posaljiMail(PregledDTO pregledDTO)  throws MailException, InterruptedException{
+        System.out.println("Slanje emaila...");
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(pregledDTO.getPacijent().getEmail());
+        mail.setFrom(environment.getProperty("spring.mail.username"));
+        mail.setSubject("Klinički centar, zakzaivanje Unapred definisanog pregleda");
+        mail.setText("Poštovani, \n\nRezervistali ste pregled na klinici  " +
+                  pregledDTO.getKlinika().getNaziv()+
+                "\nInformacije o pregledu:\n    Tip pregleda:" +  pregledDTO.getTip().getNaziv() +
+                "\n     Sala: " + pregledDTO.getSala().getNaziv() + " "+ pregledDTO.getSala().getBroj() +
+                "\n     Doktor: " + pregledDTO.getDoktor().getIme() + " "+ pregledDTO.getDoktor().getPrezime() +
+                "\n     Datum: " + pregledDTO.getDatum() + " "+ pregledDTO.getVreme() +
+
+                "\n\nSrdacan pozdrav!\n\n\n\n" );
+        javaMailSender.send(mail);
+
+        System.out.println("Email poslat!");
+    }
+
 
 }

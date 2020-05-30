@@ -14,6 +14,7 @@ public class DoctorDTO {
 	private String drzava;	   
 	private String telefon;	   
 	private String jmbg;
+	private Long tipPregleda;
 	
 	public DoctorDTO() {
 		
@@ -30,11 +31,18 @@ public class DoctorDTO {
 		this.drzava=d.getDrzava();
 		this.telefon=d.getTelefon();
 		this.jmbg=d.getJmbg();
+		this.tipPregleda = d.getTipPregleda();
+
 	}
 
-	
-	
-	
+	public Long getTipPregleda() {
+		return tipPregleda;
+	}
+
+	public void setTipPregleda(Long tipPregleda) {
+		this.tipPregleda = tipPregleda;
+	}
+
 	public Long getId() {
 		return id;
 	}
