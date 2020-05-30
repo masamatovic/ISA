@@ -34,16 +34,18 @@ public class Doktor implements UserDetails {
    @Column
    private String jmbg;
 
+
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
    @JoinTable(name = "doktor_authority",
            joinColumns = @JoinColumn(name = "doktor_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
    private List<Authority> authorities;
 
- //   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name = "klinika_id")
     private Klinika klinika;
+
+    private Long tipPregleda;
 
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
@@ -54,6 +56,15 @@ public class Doktor implements UserDetails {
    public Doktor() {
 	   
    }
+
+   public Long getTipPregleda() {
+      return tipPregleda;
+   }
+
+   public void setTipPregleda(Long tipPregleda) {
+      this.tipPregleda = tipPregleda;
+   }
+
    public Long getId() {
       return id;
    }

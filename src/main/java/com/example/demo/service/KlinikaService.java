@@ -10,10 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.DoctorDTO;
 import com.example.demo.dto.KlinikaDTO;
+
 import com.example.demo.dto.SalaDTO;
 import com.example.demo.model.Doktor;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Sala;
+
+import com.example.demo.dto.TipPregledaDTO;
+import com.example.demo.model.Doktor;
+import com.example.demo.model.Klinika;
+import com.example.demo.model.TipPregleda;
+
 import com.example.demo.repository.KlinikaRepository;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -23,6 +30,14 @@ public class KlinikaService {
 
     @Autowired
     private KlinikaRepository repository;
+
+    public KlinikaDTO izlistajKliniku (Long id){
+        Klinika klinika = repository.findById(id).orElse(null);
+        if (klinika ==null){
+            throw new ValueException("Nije pronadjena klinika sa ovim idem");
+        }
+        return new KlinikaDTO(klinika);
+    }
 
     public List<KlinikaDTO> izlistajKlinike(){
 
@@ -55,7 +70,7 @@ public class KlinikaService {
 		Klinika klinika = repository.findById(id).orElse(null);
 		
 		if(klinika == null) {
-			return null;
+            throw new ValueException("Nije pronadjena klinika sa ovim idem");
 		}
 		
 		List<Doktor> doctorList = klinika.getDoktor();
@@ -64,10 +79,22 @@ public class KlinikaService {
 		}
 		
 		return doctorDTOList;
-		
-		
 	}
-	
+
+	public ArrayList<TipPregledaDTO> izlistajTipovePregledaKlinike (Long id){
+        Klinika klinika = repository.findById(id).orElse(null);
+
+        if(klinika == null) {
+            throw new ValueException("Nije pronadjena klinika sa ovim idem");
+        }
+        List<TipPregleda> tipoviPregleda = klinika.getTipPregleda();
+        ArrayList <TipPregledaDTO> tipPregledaDTOS = new ArrayList<>();
+        for (TipPregleda tipPregleda: tipoviPregleda) {
+            tipPregledaDTOS.add(new TipPregledaDTO(tipPregleda));
+        }
+        return tipPregledaDTOS;
+    }
+
 	public Klinika findClinic(Long id) {
 		Klinika k = repository.findById(id).orElse(null);
 		
@@ -88,5 +115,4 @@ public class KlinikaService {
 		}
 		return listSalaDTO;
 	}
-	
 }
