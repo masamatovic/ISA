@@ -57,6 +57,34 @@ public class DoctorService {
 		}
 
 	}
+	
+
+	public void addDoctor(DoctorDTO dDTO) {
+		// TODO Auto-generated method stub
+		Doktor d = new Doktor();
+		try {
+			d.setIme(dDTO.getIme());
+			d.setPrezime(dDTO.getPrezime());
+			d.setEmail(dDTO.getEmail());
+			d.setLozinka(dDTO.getLozinka());
+			d.setAdresa(dDTO.getAdresa());
+			d.setGrad(dDTO.getGrad());
+			d.setTelefon(dDTO.getTelefon());
+			d.setDrzava(dDTO.getDrzava());
+			d.setJmbg(dDTO.getJmbg());
+			
+			repository.save(d);
+			
+		}
+		catch(IllegalArgumentException e) {
+			throw new ValueException("Nije uspjesno dodati doktor");
+
+		}
+
+	}
+	
+	
+	
 	public ArrayList<DoctorDTO> izlistajDoktore (Long id){
 		Klinika klinika = klinikaRepository.findById(id).orElse(null);
 		if (klinika == null){
