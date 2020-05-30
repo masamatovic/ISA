@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -33,16 +34,18 @@ public class Doktor implements UserDetails {
    @Column
    private String jmbg;
 
+
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
    @JoinTable(name = "doktor_authority",
            joinColumns = @JoinColumn(name = "doktor_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
    private List<Authority> authorities;
-   
-   
-//   @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-//   @JoinColumn(name = "klinika_id")
-//   private Klinika klinika;
+
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name = "klinika_id")
+    private Klinika klinika;
+
+    private Long tipPregleda;
 
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
@@ -53,6 +56,15 @@ public class Doktor implements UserDetails {
    public Doktor() {
 	   
    }
+
+   public Long getTipPregleda() {
+      return tipPregleda;
+   }
+
+   public void setTipPregleda(Long tipPregleda) {
+      this.tipPregleda = tipPregleda;
+   }
+
    public Long getId() {
       return id;
    }
@@ -133,7 +145,24 @@ public class Doktor implements UserDetails {
       this.jmbg = jmbg;
    }
 
-   public void setAuthorities(List<Authority> authorities) {
+    public Klinika getKlinika() {
+        return klinika;
+    }
+
+    public void setKlinika(Klinika klinika) {
+        if(this.klinika == null || !this.klinika.equals(klinika)) {
+        	if(this.klinika != null) {
+        		this.klinika.removeDoktor(this);
+        		this.klinika = null;
+        	}
+        	if(klinika != null) {
+        		this.klinika = klinika;
+        		this.klinika.addDoktor(this);
+        	}
+        }
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
       this.authorities = authorities;
    }
 
@@ -171,6 +200,7 @@ public class Doktor implements UserDetails {
    public boolean isEnabled() {
       return true;
    }
+
 
   /*
    public java.util.List<ZahtevZaGodisnji> getZahtevZaGodisnji() {
@@ -211,59 +241,7 @@ public class Doktor implements UserDetails {
       if (zahtevZaGodisnji != null)
          zahtevZaGodisnji.clear();
    }
-   public java.util.List<Pregled> getPregled() {
-      if (pregled == null)
-         pregled = new java.util.ArrayList<Pregled>();
-      return pregled;
-   }
-   
-   public java.util.Iterator getIteratorPregled() {
-      if (pregled == null)
-         pregled = new java.util.ArrayList<Pregled>();
-      return pregled.iterator();
-   }
-   
-   public void setPregled(java.util.List<Pregled> newPregled) {
-      removeAllPregled();
-      for (java.util.Iterator iter = newPregled.iterator(); iter.hasNext();)
-         addPregled((Pregled)iter.next());
-   }
-   
-   public void addPregled(Pregled newPregled) {
-      if (newPregled == null)
-         return;
-      if (this.pregled == null)
-         this.pregled = new java.util.ArrayList<Pregled>();
-      if (!this.pregled.contains(newPregled))
-      {
-         this.pregled.add(newPregled);
-         newPregled.setDoktor(this);      
-      }
-   }
-   
-   public void removePregled(Pregled oldPregled) {
-      if (oldPregled == null)
-         return;
-      if (this.pregled != null)
-         if (this.pregled.contains(oldPregled))
-         {
-            this.pregled.remove(oldPregled);
-            oldPregled.setDoktor((Doktor)null);
-         }
-   }
-   
-   public void removeAllPregled() {
-      if (pregled != null)
-      {
-         Pregled oldPregled;
-         for (java.util.Iterator iter = getIteratorPregled(); iter.hasNext();)
-         {
-            oldPregled = (Pregled)iter.next();
-            iter.remove();
-            oldPregled.setDoktor((Doktor)null);
-         }
-      }
-   }
+
    public java.util.List<ZahtevZaPregled> getZahtevZaPregled() {
       if (zahtevZaPregled == null)
          zahtevZaPregled = new java.util.ArrayList<ZahtevZaPregled>();

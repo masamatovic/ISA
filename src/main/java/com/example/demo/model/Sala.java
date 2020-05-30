@@ -1,75 +1,73 @@
 package com.example.demo.model;
 
 
-/** @pdOid 7a2afd5d-4b14-41db-89d5-1a60ebdc0e9f */
+import java.util.Date;
+
+import javax.persistence.*;
+
+@Entity
 public class Sala {
-   /** @pdOid 80fc793a-10f9-4c8a-84f1-4bc998ad0698 */
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid 50bd47eb-3cb7-4a84-a2e3-77d78e81a90c */
-   private String broj;
-   /** @pdOid 38e1efa3-c68d-43a9-a227-0800e7739fd1 */
+
+   @Column
    private String naziv;
+
+   @Column
+   private String broj;
    
-   /** @pdRoleInfo migr=no name=Pregled assc=association29 coll=java.util.List impl=java.util.ArrayList mult=0..* */
-   public java.util.List<Pregled> pregled;
-   /** @pdRoleInfo migr=no name=Klinika assc=association30 mult=1..1 side=A */
+   //da li je sala za pregled ili operaciju, ovo je obicni flag koji na to pokazuje
+   @Column
+   private boolean vrstaSale;
+   
+   /**
+    *TODO: sale i doktori
+    * */
+   
+   @Column
+   private boolean zauzece;
+   
+   @Column
+   private Date datumZauzeca;
+
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    public Klinika klinika;
-   
-   
-   /** @pdGenerated default getter */
-   public java.util.List<Pregled> getPregled() {
-      if (pregled == null)
-         pregled = new java.util.ArrayList<Pregled>();
-      return pregled;
+
+   public Sala() {
    }
-   
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorPregled() {
-      if (pregled == null)
-         pregled = new java.util.ArrayList<Pregled>();
-      return pregled.iterator();
+
+   public Long getId() {
+      return id;
    }
-   
-   /** @pdGenerated default setter
-     * @param newPregled */
-   public void setPregled(java.util.List<Pregled> newPregled) {
-      removeAllPregled();
-      for (java.util.Iterator iter = newPregled.iterator(); iter.hasNext();)
-         addPregled((Pregled)iter.next());
+
+   public void setId(Long id) {
+      this.id = id;
    }
-   
-   /** @pdGenerated default add
-     * @param newPregled */
-   public void addPregled(Pregled newPregled) {
-      if (newPregled == null)
-         return;
-      if (this.pregled == null)
-         this.pregled = new java.util.ArrayList<Pregled>();
-      if (!this.pregled.contains(newPregled))
-         this.pregled.add(newPregled);
+
+   public String getNaziv() {
+      return naziv;
    }
-   
-   /** @pdGenerated default remove
-     * @param oldPregled */
-   public void removePregled(Pregled oldPregled) {
-      if (oldPregled == null)
-         return;
-      if (this.pregled != null)
-         if (this.pregled.contains(oldPregled))
-            this.pregled.remove(oldPregled);
+
+   public void setNaziv(String naziv) {
+      this.naziv = naziv;
    }
-   
-   /** @pdGenerated default removeAll */
-   public void removeAllPregled() {
-      if (pregled != null)
-         pregled.clear();
+
+   public String getBroj() {
+      return broj;
    }
-   /** @pdGenerated default parent getter */
+
+   public void setBroj(String broj) {
+      this.broj = broj;
+   }
+
    public Klinika getKlinika() {
       return klinika;
-   }
-   
-/*
+  }
+
+
+
    public void setKlinika(Klinika newKlinika) {
       if (this.klinika == null || !this.klinika.equals(newKlinika))
       {
@@ -86,5 +84,29 @@ public class Sala {
          }
       }
    }
-*/
+
+	public boolean isVrstaSale() {
+		return vrstaSale;
+	}
+	
+	public void setVrstaSale(boolean vrstaSale) {
+		this.vrstaSale = vrstaSale;
+	}
+
+	public boolean isZauzece() {
+		return zauzece;
+	}
+
+	public void setZauzece(boolean zauzece) {
+		this.zauzece = zauzece;
+	}
+
+	public Date getDatumZauzeca() {
+		return datumZauzeca;
+	}
+
+	public void setDatumZauzeca(Date datumZauzeca) {
+		this.datumZauzeca = datumZauzeca;
+	}
+
 }
