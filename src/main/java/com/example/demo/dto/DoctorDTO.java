@@ -3,6 +3,9 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Doktor;
 
+import javax.persistence.Column;
+import java.util.ArrayList;
+
 public class DoctorDTO {
 	private Long id;	   
 	private String ime;	   
@@ -15,6 +18,9 @@ public class DoctorDTO {
 	private String telefon;	   
 	private String jmbg;
 	private Long tipPregleda;
+	private String pocetakRadnogVremena;
+	private String krajRadnogVremena;
+	private ArrayList<String> zauzetiSati;
 	
 	public DoctorDTO() {
 		
@@ -32,7 +38,34 @@ public class DoctorDTO {
 		this.telefon=d.getTelefon();
 		this.jmbg=d.getJmbg();
 		this.tipPregleda = d.getTipPregleda();
+		this.pocetakRadnogVremena = d.getPocetakRadnogVremena();
+		this.krajRadnogVremena = d.getKrajRadnogVremena();
+		this.zauzetiSati = new ArrayList<>();
 
+	}
+
+	public ArrayList<String> getZauzetiSati() {
+		return zauzetiSati;
+	}
+
+	public void setZauzetiSati(ArrayList<String> zauzetiSati) {
+		this.zauzetiSati = zauzetiSati;
+	}
+
+	public String getPocetakRadnogVremena() {
+		return pocetakRadnogVremena;
+	}
+
+	public void setPocetakRadnogVremena(String pocetakRadnogVremena) {
+		this.pocetakRadnogVremena = pocetakRadnogVremena;
+	}
+
+	public String getKrajRadnogVremena() {
+		return krajRadnogVremena;
+	}
+
+	public void setKrajRadnogVremena(String krajRadnogVremena) {
+		this.krajRadnogVremena = krajRadnogVremena;
 	}
 
 	public Long getTipPregleda() {

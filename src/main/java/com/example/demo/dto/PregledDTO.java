@@ -9,7 +9,7 @@ public class PregledDTO {
     private Long id;
     private String datum;
     private String vreme;
-    private Double trajanje;
+    private String trajanje;
     private String cena;
     private String popust;
     private boolean odobren;
@@ -67,11 +67,11 @@ public class PregledDTO {
         this.vreme = vreme;
     }
 
-    public Double getTrajanje() {
+    public String getTrajanje() {
         return trajanje;
     }
 
-    public void setTrajanje(Double trajanje) {
+    public void setTrajanje(String trajanje) {
         this.trajanje = trajanje;
     }
 

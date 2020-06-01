@@ -12,13 +12,7 @@ public class KlinikaDTO {
     private String drzava;
     private String opis;
 
-    public KlinikaDTO(Long id, String naziv, String adresa, String grad, String drzava, String opis) {
-        this.id = id;
-        this.naziv = naziv;
-        this.adresa = adresa;
-        this.grad = grad;
-        this.drzava = drzava;
-        this.opis = opis;
+    public KlinikaDTO() {
     }
     public KlinikaDTO(Klinika klinika) {
         this.id = klinika.getId();
