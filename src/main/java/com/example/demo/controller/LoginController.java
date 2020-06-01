@@ -55,8 +55,6 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity createAuthenticationToken(@RequestBody ZahtevZaAutentikacijuDTO authenticationRequest,
                                                                     HttpServletResponse response) {
-
-
         Authentication authentication = null;
         try {
             authentication = authenticationManager

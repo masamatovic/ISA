@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,11 @@ public class Doktor implements UserDetails {
    private String telefon;
    @Column
    private String jmbg;
+   @Column
+   private String pocetakRadnogVremena;
+   @Column
+   private String krajRadnogVremena;
+
 
 
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -52,6 +58,22 @@ public class Doktor implements UserDetails {
    public java.util.List<Pregled> pregled;
    public java.util.List<ZahtevZaPregled> zahtevZaPregled;
    */
+
+   public String getPocetakRadnogVremena() {
+      return pocetakRadnogVremena;
+   }
+
+   public void setPocetakRadnogVremena(String pocetakRadnogVremena) {
+      this.pocetakRadnogVremena = pocetakRadnogVremena;
+   }
+
+   public String getKrajRadnogVremena() {
+      return krajRadnogVremena;
+   }
+
+   public void setKrajRadnogVremena(String krajRadnogVremena) {
+      this.krajRadnogVremena = krajRadnogVremena;
+   }
 
    public Doktor() {
 	   

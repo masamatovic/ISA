@@ -1,16 +1,20 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.DoctorDTO;
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.TipPregledaDTO;
 import com.example.demo.model.Klinika;
+import com.example.demo.service.DoctorService;
 import com.example.demo.service.KlinikaService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,9 @@ public class KlinikaController {
 
     @Autowired
     private KlinikaService klinikaService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @GetMapping(value = "/izlistajSve")
     public ResponseEntity izlistaj(){
@@ -72,6 +79,20 @@ public class KlinikaController {
         }catch (ValueException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
+    }
+    @PostMapping(path = "/pretrazi/{tip}/{datum}")
+    @PreAuthorize("hasAuthority('PACIJENT')")
+    public ResponseEntity pretraziDoktore( @RequestBody KlinikaDTO klinikaDTO, @PathVariable Long tip, @PathVariable String datum) throws ParseException {
+
+
+        if (klinikaDTO == null) {
+            return new ResponseEntity("Niste uneli podatke", HttpStatus.BAD_REQUEST);
+        }
+
+
+        ArrayList<KlinikaDTO> klinikaDTOS  = doctorService.pretrziKlinike(klinikaDTO.getNaziv(), klinikaDTO.getAdresa(), tip, datum);
+        return new ResponseEntity<>(klinikaDTOS, HttpStatus.OK);
 
     }
 }
