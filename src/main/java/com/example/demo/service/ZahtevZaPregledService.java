@@ -1,12 +1,21 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.ZahtevZaPregledDTO;
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+import com.example.demo.dto.ZahtevZaPregledDTO;
+import com.example.demo.model.Doktor;
+import com.example.demo.model.Klinika;
+import com.example.demo.model.Pacijent;
+import com.example.demo.model.TipPregleda;
+import com.example.demo.model.ZahtevZaPregled;
+import com.example.demo.repository.DoktorRepository;
+import com.example.demo.repository.KlinikaRepository;
+import com.example.demo.repository.PacijentRepository;
+import com.example.demo.repository.TipPregledaRepository;
+import com.example.demo.repository.ZahtevZaPregledRepository;
 
 @Service
 public class ZahtevZaPregledService {
