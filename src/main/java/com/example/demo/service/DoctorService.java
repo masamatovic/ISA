@@ -82,11 +82,9 @@ public class DoctorService {
 		return doctorDTOS;
 	}
 
-	public ArrayList<DoctorDTO> pretrazi(String ime, String prezime, Long tipPregleda, String datum, Long klinika) throws ParseException {
+	public ArrayList<DoctorDTO> pretrazi(String ime, String prezime, String tipPregleda, String datum, Long klinika) throws ParseException {
 		//float radniBrSati = 0;
-		if (tipPregleda == 0) {
-			tipPregleda = null;
-		}
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date izabraniDatum = formatter.parse(datum);
 
@@ -135,7 +133,7 @@ public class DoctorService {
 		return doctorDTOS;
 	}
 
-	public ArrayList<KlinikaDTO> pretrziKlinike(String naziv, String adresa, Long tipPregleda, String datum) throws ParseException {
+	public ArrayList<KlinikaDTO> pretrziKlinike(String naziv, String adresa, String tipPregleda, String datum) throws ParseException {
 		ArrayList<Klinika> klinike = new ArrayList<Klinika>();
 		klinike = klinikaRepository.getByQuery(naziv,adresa);
 		ArrayList<KlinikaDTO> klinikeDTO = new ArrayList<KlinikaDTO>();

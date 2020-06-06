@@ -83,7 +83,7 @@ public class KlinikaController {
     }
     @PostMapping(path = "/pretrazi/{tip}/{datum}")
     @PreAuthorize("hasAuthority('PACIJENT')")
-    public ResponseEntity pretraziDoktore( @RequestBody KlinikaDTO klinikaDTO, @PathVariable Long tip, @PathVariable String datum) throws ParseException {
+    public ResponseEntity pretraziDoktore( @RequestBody KlinikaDTO klinikaDTO, @PathVariable String tip, @PathVariable String datum) throws ParseException {
 
 
         if (klinikaDTO == null) {

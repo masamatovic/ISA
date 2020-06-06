@@ -15,6 +15,9 @@ public class TipPregledaDTO {
 
     private String cena;
 
+    public TipPregledaDTO() {
+    }
+
     public TipPregledaDTO(TipPregleda tipPregleda) {
         this.id = tipPregleda.getId();
         this.naziv = tipPregleda.getNaziv();
