@@ -17,7 +17,7 @@ public class DoctorDTO {
 	private String drzava;	   
 	private String telefon;	   
 	private String jmbg;
-	private Long tipPregleda;
+	private TipPregledaDTO tipPregleda;
 	private String pocetakRadnogVremena;
 	private String krajRadnogVremena;
 	private ArrayList<String> zauzetiSati;
@@ -37,7 +37,7 @@ public class DoctorDTO {
 		this.drzava=d.getDrzava();
 		this.telefon=d.getTelefon();
 		this.jmbg=d.getJmbg();
-		this.tipPregleda = d.getTipPregleda();
+		this.tipPregleda = new TipPregledaDTO(d.getTipPregleda());
 		this.pocetakRadnogVremena = d.getPocetakRadnogVremena();
 		this.krajRadnogVremena = d.getKrajRadnogVremena();
 		this.zauzetiSati = new ArrayList<>();
@@ -68,11 +68,11 @@ public class DoctorDTO {
 		this.krajRadnogVremena = krajRadnogVremena;
 	}
 
-	public Long getTipPregleda() {
+	public TipPregledaDTO getTipPregleda() {
 		return tipPregleda;
 	}
 
-	public void setTipPregleda(Long tipPregleda) {
+	public void setTipPregleda(TipPregledaDTO tipPregleda) {
 		this.tipPregleda = tipPregleda;
 	}
 

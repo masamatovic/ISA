@@ -51,7 +51,9 @@ public class Doktor implements UserDetails {
     @JoinColumn(name = "klinika_id")
     private Klinika klinika;
 
-    private Long tipPregleda;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipPregleda", referencedColumnName = "id")
+    private TipPregleda tipPregleda;
 
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
@@ -79,11 +81,11 @@ public class Doktor implements UserDetails {
 	   
    }
 
-   public Long getTipPregleda() {
+   public TipPregleda getTipPregleda() {
       return tipPregleda;
    }
 
-   public void setTipPregleda(Long tipPregleda) {
+   public void setTipPregleda(TipPregleda tipPregleda) {
       this.tipPregleda = tipPregleda;
    }
 
