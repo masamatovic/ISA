@@ -12,6 +12,8 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 
@@ -73,5 +75,17 @@ public class PacijentService {
         return zdravstveniKartonDTO;
 
     }
+    public List<Pacijent> izlistajPoVrednosti (String vrednost){
+
+        if (vrednost.equals("ime"))
+            return repository.findAllByOrderByImeAsc();
+        else if (vrednost.equals("prezime"))
+            return repository.findAllByOrderByPrezimeAsc();
+        else if(vrednost.equals("jmbg"))
+        	return repository.findAllByOrderByJmbgAsc();
+        else
+            return repository.findAll();
+
+   }
 
 }

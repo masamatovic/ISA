@@ -35,6 +35,7 @@ public class Sala {
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    public Klinika klinika;
 
+
    public Sala() {
    }
 

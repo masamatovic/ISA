@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,11 @@ public class Doktor implements UserDetails {
    private String telefon;
    @Column
    private String jmbg;
+   @Column
+   private String pocetakRadnogVremena;
+   @Column
+   private String krajRadnogVremena;
+
 
 
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -45,7 +51,9 @@ public class Doktor implements UserDetails {
     @JoinColumn(name = "klinika_id")
     private Klinika klinika;
 
-    private Long tipPregleda;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipPregleda", referencedColumnName = "id")
+    private TipPregleda tipPregleda;
 
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
@@ -53,15 +61,31 @@ public class Doktor implements UserDetails {
    public java.util.List<ZahtevZaPregled> zahtevZaPregled;
    */
 
+   public String getPocetakRadnogVremena() {
+      return pocetakRadnogVremena;
+   }
+
+   public void setPocetakRadnogVremena(String pocetakRadnogVremena) {
+      this.pocetakRadnogVremena = pocetakRadnogVremena;
+   }
+
+   public String getKrajRadnogVremena() {
+      return krajRadnogVremena;
+   }
+
+   public void setKrajRadnogVremena(String krajRadnogVremena) {
+      this.krajRadnogVremena = krajRadnogVremena;
+   }
+
    public Doktor() {
 	   
    }
 
-   public Long getTipPregleda() {
+   public TipPregleda getTipPregleda() {
       return tipPregleda;
    }
 
-   public void setTipPregleda(Long tipPregleda) {
+   public void setTipPregleda(TipPregleda tipPregleda) {
       this.tipPregleda = tipPregleda;
    }
 

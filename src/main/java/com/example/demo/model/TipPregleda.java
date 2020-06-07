@@ -12,11 +12,11 @@ public class TipPregleda {
    @Column
    private String naziv;
 
-   /**
-    * TODO: sifranink pregleda
-    * */
-   
-   
+
+   @Column
+   private String cena;
+
+
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    private Klinika klinika;
 
@@ -39,7 +39,15 @@ public class TipPregleda {
       this.naziv = naziv;
    }
 
-  public Klinika getKlinika() {
+   public String getCena() {
+      return cena;
+   }
+
+   public void setCena(String cena) {
+      this.cena = cena;
+   }
+
+   public Klinika getKlinika() {
       return klinika;
    }
 
