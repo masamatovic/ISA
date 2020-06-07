@@ -35,6 +35,8 @@ public class DoctorService {
 	private DoktorRepository repository;
 	@Autowired
 	private KlinikaRepository klinikaRepository;
+	@Autowired
+	private PregledRepository pregledRepository;
 
 
 //<<<<<<< HEAD
@@ -71,10 +73,7 @@ public class DoctorService {
 	
 	
 	public ArrayList<DoctorDTO> izlistajDoktore (Long id){
-=======
 
-	public ArrayList<DoctorDTO> izlistajDoktore(Long id) {
->>>>>>> masa/master
 		Klinika klinika = klinikaRepository.findById(id).orElse(null);
 		if (klinika == null) {
 			throw new NoSuchElementException();
