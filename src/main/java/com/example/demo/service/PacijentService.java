@@ -80,7 +80,7 @@ public class PacijentService {
         if (vrednost.equals("ime"))
             return repository.findAllByOrderByImeAsc();
         else if (vrednost.equals("prezime"))
-            return repository.findAllByOrderByPrzAsc();
+            return repository.findAllByOrderByPrezimeAsc();
         else if(vrednost.equals("jmbg"))
         	return repository.findAllByOrderByJmbgAsc();
         else

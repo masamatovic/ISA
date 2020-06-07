@@ -1,11 +1,9 @@
 package com.example.demo.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-/** @pdOid a2393c20-bbd9-45fd-b09c-e22d61f8acf3 */
+
+@Entity
 public class Recept {
    /** @pdOid 1bf011f4-d26b-4a44-b208-80b11c6f072b */
 	@Id
