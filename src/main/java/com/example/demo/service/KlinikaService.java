@@ -10,17 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.DoctorDTO;
 import com.example.demo.dto.KlinikaDTO;
-
 import com.example.demo.dto.SalaDTO;
-import com.example.demo.model.Doktor;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.Sala;
-
 import com.example.demo.dto.TipPregledaDTO;
 import com.example.demo.model.Doktor;
 import com.example.demo.model.Klinika;
+import com.example.demo.model.Sala;
 import com.example.demo.model.TipPregleda;
-
 import com.example.demo.repository.KlinikaRepository;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -101,6 +96,7 @@ public class KlinikaService {
 		return k;
 		
 	}
+
 	public List<SalaDTO> getAllSala(Long id){
 		ArrayList<SalaDTO> listSalaDTO = new ArrayList<SalaDTO>();
 		Klinika klinika = repository.findById(id).orElse(null);
@@ -115,4 +111,5 @@ public class KlinikaService {
 		}
 		return listSalaDTO;
 	}
+
 }

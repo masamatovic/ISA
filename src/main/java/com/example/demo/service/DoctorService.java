@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
 
-import com.example.demo.dto.PregledDTO;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.Pregled;
-import com.example.demo.repository.KlinikaRepository;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,9 @@ import com.example.demo.dto.DoctorDTO;
 import com.example.demo.model.Doktor;
 import com.example.demo.model.Klinika;
 import com.example.demo.repository.DoktorRepository;
+import com.example.demo.repository.KlinikaRepository;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
-
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 
 @Service
@@ -31,7 +28,6 @@ public class DoctorService {
 	public void addDoctor(DoctorDTO dDTO,Klinika klinika) {
 //=======
 	
-
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
 		try {
@@ -58,7 +54,7 @@ public class DoctorService {
 
 	}
 	
-
+/*
 	public void addDoctor(DoctorDTO dDTO) {
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
@@ -82,7 +78,7 @@ public class DoctorService {
 		}
 
 	}
-	
+*/	
 	
 	
 	public ArrayList<DoctorDTO> izlistajDoktore (Long id){
@@ -111,6 +107,8 @@ public class DoctorService {
 	}
 
 	
+	
+
 	
 	
 }
