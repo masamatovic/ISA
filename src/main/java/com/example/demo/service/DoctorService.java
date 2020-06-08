@@ -39,10 +39,8 @@ public class DoctorService {
 	private PregledRepository pregledRepository;
 
 
-//<<<<<<< HEAD
+
 	public void addDoctor(DoctorDTO dDTO,Klinika klinika) {
-//=======
-	
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
 		try {

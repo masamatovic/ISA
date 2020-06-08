@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AdminClinicDTO;
 import com.example.demo.dto.DoctorDTO;
-import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.SalaDTO;
+import com.example.demo.dto.TipPregledaDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Sala;
+import com.example.demo.model.TipPregleda;
 import com.example.demo.service.AdminClinicService;
 import com.example.demo.service.DoctorService;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.SalaService;
+import com.example.demo.service.TipPregledaService;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
@@ -32,11 +35,16 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 @RestController
 @RequestMapping(value = "/adminKlinike")
 public class AdminClinicController {
-
+	@Autowired
 	private AdminClinicService adminClinicService;
+	@Autowired
 	private KlinikaService clinicService;
+	@Autowired
 	private DoctorService doctorService;
+	@Autowired
 	private SalaService salaService;
+	@Autowired
+	private TipPregledaService tipPService;
 	
 	@GetMapping(path = "/adminInfo/{id}")
 	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
@@ -69,21 +77,82 @@ public class AdminClinicController {
 		return new ResponseEntity("Admin klinike pogresan zahtev", HttpStatus.BAD_REQUEST); 
 	}
 	
-//	dml operacije sa pregledima
+//	dml operacije sa tipovima pregledima
 
 	/**
-	 * TODO:operacije sa pregledima
+	 * TODO:operacije sa tipovima pregledima
 	 * */
-	//	dml operacije sa salama
+	@GetMapping(path = "/sviTipoviPregleda/{clinicId}")
+	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
+	public ResponseEntity<?> getAllTipPregleda(@PathVariable Long clinicId){
+		ArrayList<TipPregledaDTO> listTPDTO = clinicService.getAllTP(clinicId);
+		if(listTPDTO == null) {
+			return new ResponseEntity<> ("GRESKA izlistavanje tipova pregleda",HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<> (listTPDTO,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping(path = "/unosTipaPregleda/{clinicId}")
+	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
+	public ResponseEntity<?> createTipPregleda(@RequestBody TipPregledaDTO tpDTO, @PathVariable Long clinicId){
+		Klinika klinika = clinicService.findClinic(clinicId);
+		if(klinika != null && tpDTO != null) {
+			try {
+				tpDTO = tipPService.addTipPregleda(tpDTO, klinika);
+				return new ResponseEntity<> (tpDTO,HttpStatus.OK);
+			}
+			catch(Exception e) {
+				return new ResponseEntity<> ("GRESKA u kreiranju tipa pregleda", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		return new ResponseEntity<> ("GRESKA tip pregleda ne predvidjena greska",HttpStatus.BAD_REQUEST);
+		
+		
+	}
+	
+	@PutMapping(path = "/izmjenaTipaPregleda")
+	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
+	public ResponseEntity<?> modifyTipPregleda(@RequestBody TipPregledaDTO tpDTO){
+		TipPregleda tp = tipPService.modifyTipPregleda(tpDTO);
+		if(tp == null) {
+			return new ResponseEntity<> ("GRESKA tip pregleda ne postoji",HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<> (tpDTO, HttpStatus.OK);
+		
+		
+	}
+	
+	@DeleteMapping(path = "/brisanjeTipZahtjeva/{id}")
+	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
+	public ResponseEntity<?> deleteTipPregleda(@PathVariable Long id){
+		try {
+			
+			if(tipPService.deleteTipPregleda(id)) {
+				return new ResponseEntity<> ("Uspjesno obirsan tip pregleda", HttpStatus.OK);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<> ("Neuspjesno obirsan tip pregleda, izuzetak", HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<> ("Tip pregleda nije obrisan, ima zauzet pregled", HttpStatus.FORBIDDEN);
+	}
+	
+//	dml operacije sa salama
 	/**
 	 *  TODO:operacije sa salama
 	 * */
 	//listanje svih sala
-	@GetMapping(path="/listanjeSala")
+	@GetMapping(path="/listanjeSala/{clinicId}")
 	@PreAuthorize("hasAuthority('ADMIN_KLINIKE')")
-	public ResponseEntity getAllSale(@RequestBody KlinikaDTO kDTO ) {
+	public ResponseEntity getAllSale(@PathVariable Long clinicId ) {
 		
-		ArrayList<SalaDTO> listSalaDTO = (ArrayList<SalaDTO>) clinicService.getAllSala(kDTO.getId());
+		//Klinika klinika = clinicService.findClinic(clinicId);
+		
+		ArrayList<SalaDTO> listSalaDTO = (ArrayList<SalaDTO>) clinicService.getAllSala(clinicId);
 		if(listSalaDTO == null) {
 			return new ResponseEntity<>("Listanje sala pogresan zahtjev",HttpStatus.BAD_REQUEST);
  

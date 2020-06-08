@@ -112,4 +112,20 @@ public class KlinikaService {
 		return listSalaDTO;
 	}
 
+	public ArrayList<TipPregledaDTO> getAllTP(Long clinicId) {
+		// TODO Auto-generated method stub
+		
+		Klinika klinika = repository.findById(clinicId).orElse(null);
+		if(klinika == null) {
+			return null;
+		}
+		ArrayList<TipPregledaDTO> listTPDTO = new ArrayList<>();
+		ArrayList<TipPregleda> listTP = (ArrayList<TipPregleda>) klinika.getTipPregleda();
+		for(TipPregleda tp : listTP) {
+			listTPDTO.add(new TipPregledaDTO(tp));
+		}
+		return listTPDTO;
+		
+	}
+
 }
