@@ -51,6 +51,9 @@ public class Pacijent implements UserDetails {
            joinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
    private List<Authority> authorities;
+   
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   private Klinika klinika;
 
 
    public Pacijent() {
@@ -178,7 +181,13 @@ public class Pacijent implements UserDetails {
       return this.lozinka;
    }
 
-   @Override
+   public Klinika getKlinika() {
+	return klinika;
+}
+public void setKlinika(Klinika klinika) {
+	this.klinika = klinika;
+}
+@Override
    public String getUsername() {
       return this.email;
    }

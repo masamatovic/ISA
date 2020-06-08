@@ -56,6 +56,9 @@ public class Klinika {
    @OnDelete(action = OnDeleteAction.CASCADE)
    @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
    private List<TipPregleda> tipPregleda;
+   
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
+   private List<Pacijent> pacijenti;
 
 
    /*
@@ -230,6 +233,16 @@ public class Klinika {
       if (doktor != null)
          doktor.clear();
    }
+
+
+public List<Pacijent> getPacijenti() {
+	return pacijenti;
+}
+
+
+public void setPacijenti(List<Pacijent> pacijenti) {
+	this.pacijenti = pacijenti;
+}
 
  /*
    public java.util.Collection<AdministratorKlinickogCentra> getAdministratorKlinickogCentra() {
