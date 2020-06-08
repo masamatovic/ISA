@@ -12,6 +12,7 @@ public class TipPregleda {
    @Column
    private String naziv;
 
+
    @Column
    private String cena;
 

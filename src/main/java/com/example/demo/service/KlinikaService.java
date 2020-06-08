@@ -1,19 +1,24 @@
 package com.example.demo.service;
 
 
-import com.example.demo.dto.DoctorDTO;
-import com.example.demo.dto.KlinikaDTO;
-import com.example.demo.dto.TipPregledaDTO;
-import com.example.demo.model.Doktor;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.TipPregleda;
-import com.example.demo.repository.KlinikaRepository;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.demo.dto.DoctorDTO;
+import com.example.demo.dto.KlinikaDTO;
+import com.example.demo.dto.SalaDTO;
+import com.example.demo.dto.TipPregledaDTO;
+import com.example.demo.model.Doktor;
+import com.example.demo.model.Klinika;
+import com.example.demo.model.Sala;
+import com.example.demo.model.TipPregleda;
+import com.example.demo.repository.KlinikaRepository;
+
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 @Service
 public class KlinikaService {
@@ -89,6 +94,37 @@ public class KlinikaService {
 		Klinika k = repository.findById(id).orElse(null);
 		
 		return k;
+		
+	}
+
+	public List<SalaDTO> getAllSala(Long id){
+		ArrayList<SalaDTO> listSalaDTO = new ArrayList<SalaDTO>();
+		Klinika klinika = repository.findById(id).orElse(null);
+		
+		if(klinika == null) {
+			return null;
+		}
+		
+		HashSet<Sala> salaList = (HashSet<Sala>) klinika.getSala();
+		for(Sala s : salaList) {
+			listSalaDTO.add(new SalaDTO(s));
+		}
+		return listSalaDTO;
+	}
+
+	public ArrayList<TipPregledaDTO> getAllTP(Long clinicId) {
+		// TODO Auto-generated method stub
+		
+		Klinika klinika = repository.findById(clinicId).orElse(null);
+		if(klinika == null) {
+			return null;
+		}
+		ArrayList<TipPregledaDTO> listTPDTO = new ArrayList<>();
+		ArrayList<TipPregleda> listTP = (ArrayList<TipPregleda>) klinika.getTipPregleda();
+		for(TipPregleda tp : listTP) {
+			listTPDTO.add(new TipPregledaDTO(tp));
+		}
+		return listTPDTO;
 		
 	}
 

@@ -1,23 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PacijentDTO;
-import com.example.demo.dto.ZdravstveniKartonDTO;
-import com.example.demo.model.Pacijent;
-import com.example.demo.model.ZahtevZaRegistraciju;
-import com.example.demo.model.ZdravstveniKarton;
-import com.example.demo.service.PacijentService;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
-import javax.websocket.server.PathParam;
-import javax.validation.ValidationException;
-import javax.xml.ws.Response;
+import com.example.demo.dto.PacijentDTO;
+import com.example.demo.dto.ZdravstveniKartonDTO;
+import com.example.demo.model.Klinika;
+import com.example.demo.model.Pacijent;
+import com.example.demo.service.KlinikaService;
+import com.example.demo.service.PacijentService;
+
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 @CrossOrigin
 @RestController
@@ -26,6 +30,8 @@ public class PacijentController {
 
     @Autowired
     private PacijentService service;
+    @Autowired
+    private KlinikaService klinikaService;
 
 
     @GetMapping(path = "/izlistajPacijenta/{id}")
@@ -41,7 +47,22 @@ public class PacijentController {
         }
         return new ResponseEntity("Pogresan zahtev", HttpStatus.BAD_REQUEST);
     }
-
+    
+    @GetMapping(path = "/izlistajSvePacijenteKlinike/{clinicId}")
+    @PreAuthorize("hasAuthority('DOKTOR')")
+    public ResponseEntity<?> izlistajSvePacijente(@PathVariable Long clinicId){
+    	Klinika klinika =  klinikaService.findClinic(clinicId) ;
+    	
+    	ArrayList<Pacijent> listP = (ArrayList<Pacijent>) klinika.getPacijenti();
+    	ArrayList<PacijentDTO> listPDTO = new ArrayList<PacijentDTO>();
+    	
+    	for(Pacijent p : listP) {
+    		listPDTO.add(new PacijentDTO(p));
+    	}
+    	
+    	return new ResponseEntity<> (listPDTO,HttpStatus.OK);
+    }
+    
     @PutMapping(path="/izmeni", consumes = "application/json", produces= "application/json")
     @PreAuthorize("hasAuthority('PACIJENT')")
     public ResponseEntity izmeni (@RequestBody PacijentDTO pacijentDTO){

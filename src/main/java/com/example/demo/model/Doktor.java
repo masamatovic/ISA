@@ -174,7 +174,16 @@ public class Doktor implements UserDetails {
     }
 
     public void setKlinika(Klinika klinika) {
-        this.klinika = klinika;
+        if(this.klinika == null || !this.klinika.equals(klinika)) {
+        	if(this.klinika != null) {
+        		this.klinika.removeDoktor(this);
+        		this.klinika = null;
+        	}
+        	if(klinika != null) {
+        		this.klinika = klinika;
+        		this.klinika.addDoktor(this);
+        	}
+        }
     }
 
     public void setAuthorities(List<Authority> authorities) {

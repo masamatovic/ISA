@@ -1,12 +1,17 @@
 package com.example.demo.service;
 
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.PregledDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Pregled;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.repository.PregledRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +23,9 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.NoSuchElementException;
+
 
 
 @Service
@@ -28,14 +33,14 @@ public class DoctorService {
 
 	@Autowired
 	private DoktorRepository repository;
-
 	@Autowired
 	private KlinikaRepository klinikaRepository;
-
 	@Autowired
 	private PregledRepository pregledRepository;
 
-	public void addDoctor(DoctorDTO dDTO) {
+
+
+	public void addDoctor(DoctorDTO dDTO,Klinika klinika) {
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
 		try {
@@ -48,17 +53,25 @@ public class DoctorService {
 			d.setTelefon(dDTO.getTelefon());
 			d.setDrzava(dDTO.getDrzava());
 			d.setJmbg(dDTO.getJmbg());
-
+			if(klinika != null) {
+				d.setKlinika(klinika);
+			}
+			
 			repository.save(d);
-
-		} catch (IllegalArgumentException e) {
+			
+		}
+		catch(IllegalArgumentException e) {
 			throw new ValueException("Nije uspjesno dodati doktor");
 
 		}
 
 	}
+	
 
-	public ArrayList<DoctorDTO> izlistajDoktore(Long id) {
+	
+	
+	public ArrayList<DoctorDTO> izlistajDoktore (Long id){
+
 		Klinika klinika = klinikaRepository.findById(id).orElse(null);
 		if (klinika == null) {
 			throw new NoSuchElementException();
@@ -153,6 +166,8 @@ public class DoctorService {
 }
 
 	
+	
+
 	
 	
 
