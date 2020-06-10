@@ -3,8 +3,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.DoctorDTO;
 import com.example.demo.dto.KlinikaDTO;
+import com.example.demo.dto.OcenaKlinikeDTO;
 import com.example.demo.dto.TipPregledaDTO;
 import com.example.demo.model.Klinika;
+import com.example.demo.model.OcenaKlinike;
 import com.example.demo.service.DoctorService;
 import com.example.demo.service.KlinikaService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin
 @RestController
@@ -95,4 +98,21 @@ public class KlinikaController {
         return new ResponseEntity<>(klinikaDTOS, HttpStatus.OK);
 
     }
+
+    @PostMapping(path = "/oceni")
+    @PreAuthorize("hasAuthority('PACIJENT')")
+    public ResponseEntity oceniKliniku(@RequestBody OcenaKlinikeDTO ocenaKlinikeDTO){
+
+
+        if (ocenaKlinikeDTO == null) {
+            return new ResponseEntity("Niste uneli podatke", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            KlinikaDTO klinikaDTO = klinikaService.oceniKliniku(ocenaKlinikeDTO);
+            return new ResponseEntity (klinikaDTO, HttpStatus.OK);
+        }catch (ValueException | NoSuchElementException e ){
+            return new ResponseEntity(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
 }

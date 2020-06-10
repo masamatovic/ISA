@@ -17,6 +17,7 @@ public class DoctorDTO {
 	private String drzava;	   
 	private String telefon;	   
 	private String jmbg;
+	private Double ocena;
 	private TipPregledaDTO tipPregleda;
 	private String pocetakRadnogVremena;
 	private String krajRadnogVremena;
@@ -37,11 +38,31 @@ public class DoctorDTO {
 		this.drzava=d.getDrzava();
 		this.telefon=d.getTelefon();
 		this.jmbg=d.getJmbg();
+		this.ocena = d.getOcena();
 		this.tipPregleda = new TipPregledaDTO(d.getTipPregleda());
 		this.pocetakRadnogVremena = d.getPocetakRadnogVremena();
 		this.krajRadnogVremena = d.getKrajRadnogVremena();
 		this.zauzetiSati = new ArrayList<>();
+		this.zauzetiSati.add("00");
+		for (Integer i=1; i<24; i++ ){
+			if (i > Float.parseFloat(d.getKrajRadnogVremena()) || i < Float.parseFloat(d.getPocetakRadnogVremena())){
+				if(i<=9) {
+					this.zauzetiSati.add("0" + i.toString());
+				}else {
+					this.zauzetiSati.add(i.toString());
+				}
+			}
 
+		}
+
+	}
+
+	public Double getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(Double ocena) {
+		this.ocena = ocena;
 	}
 
 	public ArrayList<String> getZauzetiSati() {

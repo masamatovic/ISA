@@ -49,22 +49,38 @@ INSERT INTO public.pacijent(
 
 INSERT INTO public.doktor(
 	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
-	VALUES ('Kralja Petra I 98', 'Srbija', 'marko@gmail.com', 'Beograd', 'Marko', '4820', '12', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '06', 'Markovic', '48920', 1, 1);
+	VALUES ('Kralja Petra I 98', 'Srbija', 'marko@gmail.com', 'Novi Sad', 'Marko', '4820', '12', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '06', 'Markovic', '48920', 1, 1);
 
 INSERT INTO public.doktor(
 	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
-	VALUES ('Kralja Petra I 98', 'Srbija', 'markisa@gmail.com', 'Beograd', 'Marko', '4820', '18', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '10', 'Pavlovic', '48920', 1, 1);
+	VALUES ('Kralja Petra I 98', 'Srbija', 'zivko@gmail.com', 'Beograd', 'Zivko', '4820', '18', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '10', 'Pavlovic', '48920', 1, 1);
 
 INSERT INTO public.doktor(
 	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
-	VALUES ('Kralja Petra I 98', 'Srbija', 'mare@gmail.com', 'Beograd', 'Marko', '4820', '23', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '18', 'Markovic', '48920', 2, 1);
+	VALUES ('Kralja Petra I 98', 'Srbija', 'jako@gmail.com', 'Zrenjanin', 'Janko', '4820', '23', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '18', 'Markovic', '48920', 2, 1);
 
 INSERT INTO public.doktor(
 	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
-	VALUES ('Mirijevski Venac 18', 'Srbija', 'mirko@gmail.com', 'Beograd', 'Mirko', '86004', '12', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '06', 'Mirkovic', '85093', 3, 2);
+	VALUES ('Mirijevski Venac 18', 'Srbija', 'aca@gmail.com', 'Obrenovac', 'Aca', '86004', '12', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '06', 'Mirkovic', '85093', 3, 2);
 INSERT INTO public.doktor(
 	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
-	VALUES ('Vuka Karadica 78', 'Srbija', 'srecko@gmail.com', 'Pozarevac', 'Srecko', '5029458', '15', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '20', 'Sreckovic', '894204', 5, 3);
+	VALUES ('Mirijevski Venac 18', 'Srbija', 'peca@gmail.com', 'Beograd', 'Peca', '86004', '16', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '08', 'Mirkovic', '85093', 4, 2);
+INSERT INTO public.doktor(
+	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
+	VALUES ('Mirijevski Venac 18', 'Srbija', 'neca@gmail.com', 'Beograd', 'Neca', '86004', '22', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '15', 'Mirkovic', '85093', 3, 2);
+
+INSERT INTO public.doktor(
+	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
+	VALUES ('Vuka Karadica 78', 'Srbija', 'mima@gmail.com', 'Novi Sad', 'Mima', '5029458', '15', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '08', 'Sreckovic', '894204', 5, 3);
+
+INSERT INTO public.doktor(
+	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
+	VALUES ('Vuka Karadica 78', 'Srbija', 'mina@gmail.com', 'Novi Sad', 'Mina', '5029458', '20', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '12', 'Sreckovic', '894204', 5, 3);
+
+INSERT INTO public.doktor(
+	 adresa, drzava, email, grad, ime, jmbg, kraj_radnog_vremena, lozinka, pocetak_radnog_vremena, prezime, telefon, tip_pregleda, klinika_id)
+	VALUES ('Vuka Karadica 78', 'Srbija', 'nina@gmail.com', 'Backa Palanka', 'Nina', '5029458', '20', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', '16', 'Sreckovic', '894204', 6, 3);
+
 
 INSERT INTO public.medicinska_sestra(
 	 adresa, drzava, email, grad, ime, jmbg, lozinka, prezime, telefon)
@@ -129,3 +145,27 @@ INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
 	VALUES ( 1500, '2020-06-14', false, 'nema','3', '16', 2, 1, null, 3, 1);
 
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','3', '06', 4, 2, null, 3, 3);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','3', '09', 4, 2, null, 3, 3);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','3', '08', 5, 2, null, 4, 4);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','1', '14', 5, 2, null, 4, 4);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','1', '15', 6, 2, null, 3, 3);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-20', false , 'nema','3', '17', 6, 2, null, 3, 3);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 2000, '2020-06-8', true , 'nema','1', '15', 6, 2, 1, 3, 3);
+INSERT INTO public.pregled(
+	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
+	VALUES ( 1500, '2020-06-10', false, 'nema','3', '16', 2, 1, 1, 3, 1);

@@ -15,7 +15,6 @@ public class TipPregleda {
    @Column
    private String cena;
 
-
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    private Klinika klinika;
 

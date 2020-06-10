@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ValidationException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -64,6 +65,17 @@ public class PregledController {
             return new ResponseEntity<>(pregledDTO, HttpStatus.OK);
         } catch (ValidationException | NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    @GetMapping(path = "/izlistajIstoriju/{id}")
+    @PreAuthorize( "hasAuthority('PACIJENT')")
+    public ResponseEntity izlistajIstoriju(@PathVariable Long id) {
+        try {
+            ArrayList<PregledDTO> preglediDTO  = pregledService.izlisajIstoriju(id);
+            return new ResponseEntity<>(preglediDTO, HttpStatus.OK);
+        } catch (NoSuchElementException | ParseException e) {
+            return new ResponseEntity<>("Ne postoji korisnik sa ovim id-em!", HttpStatus.NOT_FOUND);
         }
     }
 

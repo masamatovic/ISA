@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dto.DoctorDTO;
-import com.example.demo.dto.PacijentDTO;
-import com.example.demo.dto.PregledDTO;
+import com.example.demo.dto.*;
 import com.example.demo.model.Klinika;
 import com.example.demo.service.DoctorService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -60,6 +58,21 @@ public class DoctorController {
         ArrayList<DoctorDTO> doctorDTOS  = doctorService.pretrazi(doctorDTO.getIme(), doctorDTO.getPrezime(), doctorDTO.getTipPregleda().getNaziv(), datum, id);
         return new ResponseEntity<>(doctorDTOS, HttpStatus.OK);
 
+    }
+    @PostMapping(path = "/oceni")
+    @PreAuthorize("hasAuthority('PACIJENT')")
+    public ResponseEntity oceniKliniku(@RequestBody OcenaDoktoraDTO ocenaDoktoraDTO){
+
+
+        if (ocenaDoktoraDTO == null) {
+            return new ResponseEntity("Niste uneli podatke", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            DoctorDTO doctorDTO = doctorService.oceniDoktora(ocenaDoktoraDTO);
+            return new ResponseEntity (doctorDTO, HttpStatus.OK);
+        }catch (ValueException | NoSuchElementException e ){
+            return new ResponseEntity(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
 }

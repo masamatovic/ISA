@@ -11,6 +11,7 @@ public class KlinikaDTO {
     private String grad;
     private String drzava;
     private String opis;
+    private Double ocena;
 
     public KlinikaDTO() {
     }
@@ -21,6 +22,15 @@ public class KlinikaDTO {
         this.grad = klinika.getGrad();
         this.drzava = klinika.getDrzava();
         this.opis = klinika.getOpis();
+        this.ocena = klinika.getOcena();
+    }
+
+    public Double getOcena() {
+        return ocena;
+    }
+
+    public void setOcena(Double ocena) {
+        this.ocena = ocena;
     }
 
     public Long getId() {

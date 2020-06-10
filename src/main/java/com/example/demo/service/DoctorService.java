@@ -1,18 +1,12 @@
 package com.example.demo.service;
 
 
-import com.example.demo.dto.KlinikaDTO;
-import com.example.demo.dto.PregledDTO;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.Pregled;
-import com.example.demo.repository.KlinikaRepository;
-import com.example.demo.repository.PregledRepository;
+import com.example.demo.dto.*;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.DoctorDTO;
-import com.example.demo.model.Doktor;
-import com.example.demo.repository.DoktorRepository;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.text.DateFormat;
@@ -20,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -34,6 +29,12 @@ public class DoctorService {
 
 	@Autowired
 	private PregledRepository pregledRepository;
+
+	@Autowired
+	private OcenaDoktoraRepository ocenaDoktoraRepository;
+
+	@Autowired
+	private PacijentRepository pacijentRepository;
 
 	public void addDoctor(DoctorDTO dDTO) {
 		// TODO Auto-generated method stub
@@ -81,6 +82,18 @@ public class DoctorService {
 		}
 		return doctorDTOS;
 	}
+	public ArrayList<Pregled> izlistajDoktorovePreglede(Doktor doktor, Date datum) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<Pregled> pregledi = new ArrayList<>();
+		ArrayList<Pregled> sviPregledi = new ArrayList<>();
+		sviPregledi = pregledRepository.getByDoktor(doktor);
+		for (Pregled pregled : sviPregledi) {
+			Date datumPregleda = formatter.parse(pregled.getDatum());
+			if (formatter.format(datum).equals(formatter.format(datumPregleda))) {
+				pregledi.add(pregled);
+			}}
+		return pregledi;
+	}
 
 	public ArrayList<DoctorDTO> pretrazi(String ime, String prezime, String tipPregleda, String datum, Long klinika) throws ParseException {
 		//float radniBrSati = 0;
@@ -98,15 +111,12 @@ public class DoctorService {
 				float radnoVremeDoktora = 0;
 				float radniBrSati = 0;
 				radnoVremeDoktora = Float.parseFloat(doktor.getKrajRadnogVremena()) - Float.parseFloat(doktor.getPocetakRadnogVremena());
-
 				DoctorDTO doctorDTO = new DoctorDTO(doktor);
 				ArrayList<Pregled> doktoroviPregledi = new ArrayList<Pregled>();
-				doktoroviPregledi = pregledRepository.getByDoktor(doktor);
+				doktoroviPregledi = this.izlistajDoktorovePreglede(doktor, izabraniDatum);
 				if (!doktoroviPregledi.isEmpty()) {
 					//-------prolazi kroz sve preglede zadatog doktora i racuna njegovo zauzece za taj dan--------
 					for (Pregled pregled : doktoroviPregledi) {
-						Date datumPregleda = formatter.parse(pregled.getDatum());
-						if (formatter.format(izabraniDatum).equals(formatter.format(datumPregleda))) {
 							radniBrSati += Float.parseFloat(pregled.getTrajanje());
 							//------------belezi broj zaizetih sati----------
 							doctorDTO.getZauzetiSati().add(pregled.getVreme());
@@ -114,15 +124,20 @@ public class DoctorService {
 								Integer pocetakPregleda = Integer.parseInt(pregled.getVreme());
 								for (int i = 1; i < Integer.parseInt(pregled.getTrajanje()); i++) {
 									Integer vreme = pocetakPregleda + i;
-									doctorDTO.getZauzetiSati().add(vreme.toString());
+									//da bi onemogucili vreme na frontu moramo ga cuvati u formatu 01,02...
+									if (vreme <= 9 ) {
+										doctorDTO.getZauzetiSati().add("0"+vreme.toString());
+									}else {
+										doctorDTO.getZauzetiSati().add(vreme.toString());
+									}
 								}
 							}
-						}
-
 					}
 					if (radnoVremeDoktora - radniBrSati >= 1) {
 						doctorDTOS.add(doctorDTO);
 					}
+				} else {
+					doctorDTOS.add(doctorDTO);
 				}
 			}
 		} else {
@@ -147,6 +162,41 @@ public class DoctorService {
 			}
 		}
 		return klinikeDTO;
+	}
+
+	public void napraviOcenuDoktora (Pacijent pacijent, Doktor doktor, Integer ocena ){
+		OcenaDoktora ocenaDoktora = new OcenaDoktora();
+		ocenaDoktora.setDoktor(doktor);
+		ocenaDoktora.setOcena(ocena);
+		ocenaDoktora.setPacijent(pacijent);
+		ocenaDoktoraRepository.save(ocenaDoktora);
+	}
+
+	public DoctorDTO oceniDoktora (OcenaDoktoraDTO ocenaDoktoraDTO){
+
+		Pacijent pacijent = pacijentRepository.findById(ocenaDoktoraDTO.getPacijent()).orElse(null);
+		if (pacijent == null){
+			throw new NoSuchElementException();
+		}
+		Doktor doktor = repository.findById(ocenaDoktoraDTO.getDoktor()).orElse(null);
+		if (doktor == null){
+			throw new NoSuchElementException();
+		}
+
+		OcenaDoktora ocenaDoktora = ocenaDoktoraRepository.findByPacijentAndDoktor(pacijent, doktor);
+		if (ocenaDoktora != null) {
+			throw new ValueException("Vec ste ocenili ovu kliniku");
+		}
+		this.napraviOcenuDoktora(pacijent, doktor, ocenaDoktoraDTO.getOcena());
+		List<OcenaDoktora> oceneDoktora = ocenaDoktoraRepository.findByDoktor(doktor);
+		Integer zbir=0;
+		for(OcenaDoktora ocena : oceneDoktora ){
+			zbir+=ocena.getOcena();
+		}
+		Double ocena = (double)zbir/(double)oceneDoktora.size();
+		doktor.setOcena(ocena);
+		repository.save(doktor);
+		return new DoctorDTO(doktor);
 	}
 
 

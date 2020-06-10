@@ -1,13 +1,13 @@
 package com.example.demo.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -38,8 +38,8 @@ public class Doktor implements UserDetails {
    private String pocetakRadnogVremena;
    @Column
    private String krajRadnogVremena;
-
-
+   @Column
+   private Double ocena;
 
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
    @JoinTable(name = "doktor_authority",
@@ -55,11 +55,40 @@ public class Doktor implements UserDetails {
     @JoinColumn(name = "tipPregleda", referencedColumnName = "id")
     private TipPregleda tipPregleda;
 
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "doktor", fetch = FetchType.LAZY)
+   private List<OcenaDoktora> oceneDoktora;
+
+
+
+
    /*
    public java.util.List<ZahtevZaGodisnji> zahtevZaGodisnji;
    public java.util.List<Pregled> pregled;
    public java.util.List<ZahtevZaPregled> zahtevZaPregled;
    */
+
+
+   public Doktor() {
+	   
+   }
+
+   public List<OcenaDoktora> getOceneDoktora() {
+      return oceneDoktora;
+   }
+
+   public void setOceneDoktora(List<OcenaDoktora> oceneDoktora) {
+      this.oceneDoktora = oceneDoktora;
+   }
+
+   public Double getOcena() {
+      return ocena;
+   }
+
+   public void setOcena(Double ocena) {
+      this.ocena = ocena;
+   }
+
 
    public String getPocetakRadnogVremena() {
       return pocetakRadnogVremena;
@@ -75,10 +104,6 @@ public class Doktor implements UserDetails {
 
    public void setKrajRadnogVremena(String krajRadnogVremena) {
       this.krajRadnogVremena = krajRadnogVremena;
-   }
-
-   public Doktor() {
-	   
    }
 
    public TipPregleda getTipPregleda() {
