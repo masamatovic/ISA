@@ -39,7 +39,10 @@ public class Klinika {
 
    @Column(nullable = false)
    private String opis;
-   
+
+   @Column
+   private Double ocena;
+
    //administrator klinike
    @OnDelete(action = OnDeleteAction.CASCADE)
    @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
@@ -57,6 +60,10 @@ public class Klinika {
    @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
    private List<TipPregleda> tipPregleda;
 
+   @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY)
+   private List<OcenaKlinike> oceneKlinike;
+
 
    /*
 
@@ -73,6 +80,21 @@ public class Klinika {
    public Klinika() {
    }
 
+   public Double getOcena() {
+      return ocena;
+   }
+
+   public void setOcena(Double ocena) {
+      this.ocena = ocena;
+   }
+
+   public List<OcenaKlinike> getOceneKlinike() {
+      return oceneKlinike;
+   }
+
+   public void setOceneKlinike(List<OcenaKlinike> oceneKlinike) {
+      this.oceneKlinike = oceneKlinike;
+   }
 
    public List<TipPregleda> getTipPregleda() {
       return tipPregleda;

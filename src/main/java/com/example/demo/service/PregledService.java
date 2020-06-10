@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 @Service
@@ -58,6 +61,27 @@ public class PregledService {
         pregled.setOdobren(true);
         pregledRepository.save(pregled);
         return new PregledDTO(pregled);
+    }
+
+    public ArrayList<PregledDTO> izlisajIstoriju (Long id) throws ParseException {
+        Date danas = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        //System.out.println(formatter.format(date));
+        Pacijent pacijent = pacijentRepository.findById(id).orElse(null);
+        if (pacijent == null){
+            throw new NoSuchElementException();
+        }
+        ArrayList<Pregled> pregledi = pregledRepository.getByPacijent(pacijent);
+        ArrayList<PregledDTO> preglediDTO = new ArrayList<>();
+        if (!pregledi.isEmpty()){
+            for (Pregled pregled : pregledi){
+                Date datumPregleda = formatter.parse(pregled.getDatum());
+                if (datumPregleda.before(danas) && !datumPregleda.equals(danas)){
+                    preglediDTO.add(new PregledDTO(pregled));
+                }
+            }
+        }
+        return preglediDTO;
     }
 
 }
