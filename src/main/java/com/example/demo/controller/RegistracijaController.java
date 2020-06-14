@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ZdravstveniKartonDTO;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.ZahtevZaRegistraciju;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.PacijentService;
 import com.example.demo.service.ZahtevZaRegistracijuService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ValidationException;
+import java.util.List;
 
 
 @CrossOrigin
@@ -63,19 +66,28 @@ public class RegistracijaController {
 
         ZahtevZaRegistraciju odbijeniZahtev = new ZahtevZaRegistraciju();
         try{
-            odbijeniZahtev = zaRegistracijuService.odbijZahtev(zaRegistraciju.getEmail());
+           zaRegistracijuService.odbijZahtev(zaRegistraciju.getEmail());
         }catch (ValidationException e){
             return new ResponseEntity("Ne postoji zahtev sa ovim emailom", HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         try {
-            emailService.posaljiMail(odbijeniZahtev, poruka);
+            emailService.posaljiMail(zaRegistraciju, poruka);
         } catch (MailException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity(odbijeniZahtev, HttpStatus.OK);
+        return new ResponseEntity("Zahtev je odbijen", HttpStatus.OK);
+
+    }
+
+    @GetMapping(path = "/izlistajZahteve", produces = "application/json")
+    @PreAuthorize("hasAuthority('ADMIN_KCENTRA')")
+    public ResponseEntity izlistajKarton(){
+
+        List<ZahtevZaRegistraciju> zahtevZaRegistracijus =  zaRegistracijuService.izlistajSve();
+        return new ResponseEntity(zahtevZaRegistracijus, HttpStatus.OK);
 
     }
 

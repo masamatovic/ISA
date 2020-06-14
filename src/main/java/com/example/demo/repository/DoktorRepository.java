@@ -19,7 +19,7 @@ public interface DoktorRepository extends JpaRepository<Doktor,Long> {
            "(?1 = '' or upper(d.ime) like upper(?1)) " +
            "and (?2 = '' or upper(d.prezime) like upper(?2)) " +
            "and (?3 = '' or  upper(d.tipPregleda.naziv) like upper(?3) )" +
-           "and ( d.klinika.id = ?4)")
-    ArrayList<Doktor> getByQuery (String ime, String Prezime, String tipPregleda, Long id );
+           "and ( d.klinika.id = ?4) and ( d.ocena is null or d.ocena >= ?5)")
+    ArrayList<Doktor> getByQuery (String ime, String Prezime, String tipPregleda, Long id, Double ocena );
 
 }

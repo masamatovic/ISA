@@ -35,6 +35,7 @@ public class AdministratorKlinickogCentra implements UserDetails {
    @Column
    private String jmbg;
 
+
    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
    @JoinTable(name = "adminkc_authority",
            joinColumns = @JoinColumn(name = "adminkc_id", referencedColumnName = "id"),
@@ -120,6 +121,7 @@ public class AdministratorKlinickogCentra implements UserDetails {
    public void setJmbg(String jmbg) {
       this.jmbg = jmbg;
    }
+
 
    /*public java.util.List<ZahtevZaRegistraciju> zahtevZaRegistraciju;
 

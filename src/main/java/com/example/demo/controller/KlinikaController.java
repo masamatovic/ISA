@@ -94,7 +94,7 @@ public class KlinikaController {
         }
 
 
-        ArrayList<KlinikaDTO> klinikaDTOS  = doctorService.pretrziKlinike(klinikaDTO.getNaziv(), klinikaDTO.getAdresa(), tip, datum);
+        ArrayList<KlinikaDTO> klinikaDTOS  = doctorService.pretrziKlinike(klinikaDTO.getNaziv(), klinikaDTO.getAdresa(), tip, datum, klinikaDTO.getOcena());
         return new ResponseEntity<>(klinikaDTOS, HttpStatus.OK);
 
     }

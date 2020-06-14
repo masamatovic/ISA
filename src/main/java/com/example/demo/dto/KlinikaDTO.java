@@ -12,6 +12,7 @@ public class KlinikaDTO {
     private String drzava;
     private String opis;
     private Double ocena;
+    private String cena;
 
     public KlinikaDTO() {
     }
@@ -79,5 +80,13 @@ public class KlinikaDTO {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public String getCena() {
+        return cena;
+    }
+
+    public void setCena(String cena) {
+        this.cena = cena;
     }
 }

@@ -55,7 +55,7 @@ public class DoctorController {
         }
 
 
-        ArrayList<DoctorDTO> doctorDTOS  = doctorService.pretrazi(doctorDTO.getIme(), doctorDTO.getPrezime(), doctorDTO.getTipPregleda().getNaziv(), datum, id);
+        ArrayList<DoctorDTO> doctorDTOS  = doctorService.pretrazi(doctorDTO.getIme(), doctorDTO.getPrezime(), doctorDTO.getTipPregleda().getNaziv(), datum, id, doctorDTO.getOcena());
         return new ResponseEntity<>(doctorDTOS, HttpStatus.OK);
 
     }

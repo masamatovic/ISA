@@ -39,7 +39,7 @@ public class ZahtevZaPregledService {
 
         ZahtevZaPregled zahtevZaPregled = new ZahtevZaPregled();
         zahtevZaPregled.setCena(zahtevZaPregledDTO.getCena());
-        zahtevZaPregled.setDatum(zahtevZaPregledDTO.getCena());
+        zahtevZaPregled.setDatum(zahtevZaPregledDTO.getDatum());
         zahtevZaPregled.setTrajanje("01");
         zahtevZaPregled.setDoktor(doktor);
         zahtevZaPregled.setPacijent(pacijent);
