@@ -39,7 +39,7 @@ public class PregledController {
         try {
             ArrayList<PregledDTO> preglediDTO  = pregledService.izlistajUnapredDefPreglede(id);
             return new ResponseEntity<>(preglediDTO, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | ParseException e) {
             return new ResponseEntity<>("Ne postoji klinika sa ovim id-em!", HttpStatus.NOT_FOUND);
         }
     }
