@@ -2,9 +2,11 @@ package com.example.demo.dto;
 
 
 import com.example.demo.model.Doktor;
+import com.example.demo.model.OcenaDoktora;
 
 import javax.persistence.Column;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DoctorDTO {
 	private Long id;	   

@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.PregledDTO;
+import com.example.demo.model.Klinika;
+import com.example.demo.model.Pregled;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.PregledService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.ValidationException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -77,6 +81,20 @@ public class PregledController {
         } catch (NoSuchElementException | ParseException e) {
             return new ResponseEntity<>("Ne postoji korisnik sa ovim id-em!", HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping(value = "/sortiraj/{vrednost}/{id}")
+    @PreAuthorize("hasAuthority('PACIJENT')")
+    public ResponseEntity sortiraj(@PathVariable String vrednost, @PathVariable Long id ){
+
+        ArrayList<PregledDTO> pregledi;
+        try {
+            pregledi = pregledService.sortiraj(vrednost, id);
+        }catch (NoSuchElementException | ParseException e){
+            return new ResponseEntity("Ne postoji pacijent sa tim idem", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+
+        return new ResponseEntity(pregledi, HttpStatus.OK);
     }
 
 }

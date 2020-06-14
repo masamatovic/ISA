@@ -69,14 +69,13 @@ public class ZahtevZaRegistracijuService {
         return pacijent;
 
     }
-    public ZahtevZaRegistraciju odbijZahtev (String email){
+    public void odbijZahtev (String email){
         ZahtevZaRegistraciju zahtevZaRegistraciju = zahtevZaRegistracijuRepository.findByEmail(email);
         if (zahtevZaRegistraciju == null){
             throw new ValidationException("Ne postoji zahtev sa ovim id-em");
         }
-        zahtevZaRegistraciju.setOdobren(false);
-        zahtevZaRegistracijuRepository.save(zahtevZaRegistraciju);
-        return zahtevZaRegistraciju;
+       // zahtevZaRegistraciju.setOdobren(false);
+        zahtevZaRegistracijuRepository.delete(zahtevZaRegistraciju);
 
     }
 
@@ -91,6 +90,12 @@ public class ZahtevZaRegistracijuService {
         pacijent.setAuthorities(authorities);
         pacijentRepository.save(pacijent);
         return  pacijent;
+    }
+
+    public List<ZahtevZaRegistraciju> izlistajSve(){
+        List<ZahtevZaRegistraciju> zahteviZaRegistracije= new ArrayList<>();
+        zahteviZaRegistracije =  zahtevZaRegistracijuRepository.findAllByOdobren(false);
+        return zahteviZaRegistracije;
     }
 
 }

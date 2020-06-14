@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.PacijentDTO;
+import com.example.demo.dto.PregledDTO;
 import com.example.demo.dto.ZdravstveniKartonDTO;
-import com.example.demo.model.Pacijent;
-import com.example.demo.model.ZahtevZaRegistraciju;
-import com.example.demo.model.ZdravstveniKarton;
+import com.example.demo.model.*;
 import com.example.demo.service.PacijentService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.websocket.server.PathParam;
 import javax.validation.ValidationException;
 import javax.xml.ws.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -67,5 +69,6 @@ public class PacijentController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
 }

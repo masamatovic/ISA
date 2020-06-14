@@ -2,8 +2,13 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.PregledDTO;
+import com.example.demo.dto.ZahtevZaPregledDTO;
+import com.example.demo.model.AdministratorKlinike;
+import com.example.demo.model.Klinika;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.ZahtevZaRegistraciju;
+import com.example.demo.repository.AdminKlinikeRepository;
+import com.example.demo.repository.KlinikaRepository;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -21,9 +26,14 @@ public class EmailService {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private AdminKlinikeRepository adminKlinikeRepository;
+
+    @Autowired
+    private KlinikaRepository klinikaRepository;
+
     @Async
     public void posaljiMail(Pacijent pacijent)  throws MailException, InterruptedException{
-        System.out.println("Slanje emaila...");
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(pacijent.getEmail());
@@ -36,7 +46,6 @@ public class EmailService {
                 "\n\nHvala vam na ukazanom poverenju!\n\n\n\n" );
         javaMailSender.send(mail);
 
-        System.out.println("Email poslat!");
     }
 
     @Async
@@ -53,11 +62,9 @@ public class EmailService {
                 "\n\nMolimo za razumevanje!\n\n\n\n" );
         javaMailSender.send(mail);
 
-        System.out.println("Email poslat!");
     }
     @Async
     public void posaljiMail(PregledDTO pregledDTO)  throws MailException, InterruptedException{
-        System.out.println("Slanje emaila...");
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(pregledDTO.getPacijent().getEmail());
@@ -68,13 +75,27 @@ public class EmailService {
                 "\nInformacije o pregledu:\n    Tip pregleda:" +  pregledDTO.getTip().getNaziv() +
                 "\n     Sala: " + pregledDTO.getSala().getNaziv() + " "+ pregledDTO.getSala().getBroj() +
                 "\n     Doktor: " + pregledDTO.getDoktor().getIme() + " "+ pregledDTO.getDoktor().getPrezime() +
-                "\n     Datum: " + pregledDTO.getDatum() + " "+ pregledDTO.getVreme() +
+                "\n     Datum: " + pregledDTO.getDatum() + " u  "+ pregledDTO.getVreme() + "h" +
 
                 "\n\nSrdacan pozdrav!\n\n\n\n" );
         javaMailSender.send(mail);
 
-        System.out.println("Email poslat!");
     }
+    @Async
+    public void posaljiMail(Long klinika)  throws MailException, InterruptedException{
 
+        Klinika klinika1 = klinikaRepository.findById(klinika).orElse(null);
+        AdministratorKlinike administratorKlinike = adminKlinikeRepository.findByKlinika(klinika1);
 
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(administratorKlinike.getEmail());
+        mail.setFrom(environment.getProperty("spring.mail.username"));
+        mail.setSubject("Novi zahtev za pregled");
+        mail.setText("Poštovani, \n\n  " +
+                "\nKreiran je novi zahtev za pregled.\n   "+
+                "\nZa vise informacija posetite vas profil" +
+
+                "\n\nSrdacan pozdrav!\n\n\n\n" );
+        javaMailSender.send(mail);
+    }
 }

@@ -36,6 +36,9 @@ public class DoctorService {
 	@Autowired
 	private PacijentRepository pacijentRepository;
 
+	@Autowired
+	private TipPregledaRepository tipPregledaRepository;
+
 	public void addDoctor(DoctorDTO dDTO) {
 		// TODO Auto-generated method stub
 		Doktor d = new Doktor();
@@ -95,7 +98,7 @@ public class DoctorService {
 		return pregledi;
 	}
 
-	public ArrayList<DoctorDTO> pretrazi(String ime, String prezime, String tipPregleda, String datum, Long klinika) throws ParseException {
+	public ArrayList<DoctorDTO> pretrazi(String ime, String prezime, String tipPregleda, String datum, Long klinika, Double ocena) throws ParseException {
 		//float radniBrSati = 0;
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,7 +109,7 @@ public class DoctorService {
 		ArrayList<DoctorDTO> doctorDTOS = new ArrayList<>();
 		if (datum != "") {
 			ArrayList<Doktor> doktori = new ArrayList<Doktor>();
-			doktori = repository.getByQuery(ime, prezime, tipPregleda, klinika);
+			doktori = repository.getByQuery(ime, prezime, tipPregleda, klinika, ocena);
 			for (Doktor doktor : doktori) {
 				float radnoVremeDoktora = 0;
 				float radniBrSati = 0;
@@ -142,23 +145,26 @@ public class DoctorService {
 			}
 		} else {
 			ArrayList<Doktor> doktori = new ArrayList<Doktor>();
-			doktori = repository.getByQuery(ime, prezime, tipPregleda, klinika);
+			doktori = repository.getByQuery(ime, prezime, tipPregleda, klinika, ocena);
 			doctorDTOS = izlistajDTO(doktori);
 		}
 		return doctorDTOS;
 	}
 
-	public ArrayList<KlinikaDTO> pretrziKlinike(String naziv, String adresa, String tipPregleda, String datum) throws ParseException {
+	public ArrayList<KlinikaDTO> pretrziKlinike(String naziv, String adresa, String tipPregleda, String datum, Double ocena) throws ParseException {
 		ArrayList<Klinika> klinike = new ArrayList<Klinika>();
-		klinike = klinikaRepository.getByQuery(naziv,adresa);
+		klinike = klinikaRepository.getByQuery(naziv,adresa, ocena);
 		ArrayList<KlinikaDTO> klinikeDTO = new ArrayList<KlinikaDTO>();
 
 
 		for(Klinika k : klinike){
 			ArrayList<DoctorDTO> doctorDTOS = new ArrayList<DoctorDTO>();
-			doctorDTOS = this.pretrazi("", "" , tipPregleda, datum, k.getId());
+			doctorDTOS = this.pretrazi("", "" , tipPregleda, datum, k.getId(), 0.0);
+			TipPregleda tipPregleda1 = tipPregledaRepository.findByKlinikaAndAndNaziv(k, tipPregleda);
 			if (!doctorDTOS.isEmpty()){
-				klinikeDTO.add(new KlinikaDTO(k));
+				KlinikaDTO klinikaDTO  = new KlinikaDTO(k);
+				klinikaDTO.setCena(tipPregleda1.getCena());
+				klinikeDTO.add(klinikaDTO);
 			}
 		}
 		return klinikeDTO;

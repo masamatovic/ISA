@@ -15,7 +15,7 @@ public interface KlinikaRepository extends JpaRepository<Klinika, Long> {
 
     @Query("select k from Klinika k where " +
             "(?1 = '' or upper(k.naziv) like upper(?1)) " +
-            "and (?2 = '' or upper(k.adresa) like upper(?2)) ")
-    ArrayList<Klinika> getByQuery (String naziv, String adresa );
+            "and (?2 = '' or upper(k.adresa) like upper(?2)) and ( k.ocena is null or k.ocena >= ?3) ")
+    ArrayList<Klinika> getByQuery (String naziv, String adresa, Double ocena );
 
 }
