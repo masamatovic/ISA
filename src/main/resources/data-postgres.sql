@@ -26,7 +26,7 @@ INSERT INTO public.tip_pregleda(cena, naziv, klinika_id) VALUES ('3000','Ultrazv
 
 INSERT INTO public.zdravstveni_karton(
 	 alergije, dioptrija, krvna_grupa, pol, tezina, visina)
-	VALUES ('ambrozija, brufen', 'nema', '0+', 'Ž', '60', '166');
+	VALUES ('ambrozija, brufen', 'nema', '0+', 'F', '60', '166');
 INSERT INTO public.zdravstveni_karton(
 	 alergije, dioptrija, krvna_grupa, pol, tezina, visina)
 	VALUES ('nema', '+0.75', '0-', 'M', '89', '196');
@@ -143,13 +143,13 @@ INSERT INTO public.pacijent_authority (pacijent_id, authority_id) VALUES (3, 5);
 /*  unapred definisani pregledi */
 INSERT INTO public.pregled(
 	cena, datum, odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 3000, '2020-06-14', false, 'nema','3', '16', 1, 1, null, 1, 1);
+	VALUES ( 3000, '2020-06-10', false, 'nema','3', '16', 1, 1, null, 1, 1);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-14', false , 'nema','3', '16', 1, 1, null, 2, 1);
+	VALUES ( 2000, '2020-06-20', false , 'nema','3', '16', 1, 1, null, 2, 1);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 1500, '2020-06-14', false, 'nema','3', '16', 2, 1, null, 3, 1);
+	VALUES ( 1500, '2020-06-20', false, 'nema','3', '16', 2, 1, null, 3, 1);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
 	VALUES ( 2500, '2020-06-22', false , 'nema','3', '06', 4, 2, null, 3, 3);
@@ -163,25 +163,25 @@ INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
 	VALUES ( 2800, '2020-06-24', false , 'nema','1', '17', 9, 3, null, 6, 6);
 
-/*  urezervisani pregledi pregledi */
+/*  rezervisani pregledi pregledi */
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','3', '06', 4, 2, 1, 3, 3);
+	VALUES ( 2000, '2020-06-28', true , 'nema','3', '06', 4, 2, 1, 3, 3);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','3', '09', 4, 2, 2, 3, 3);
+	VALUES ( 2000, '2020-06-28', true , 'nema','3', '09', 4, 2, 2, 3, 3);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','3', '09', 5, 2, 3, 4, 4);
+	VALUES ( 2000, '2020-06-28', true , 'nema','3', '09', 5, 2, 3, 4, 4);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','1', '14', 5, 2, 3, 4, 4);
+	VALUES ( 2000, '2020-06-28', true , 'nema','1', '14', 5, 2, 3, 4, 4);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','1', '16', 6, 2, 3, 3, 3);
+	VALUES ( 2000, '2020-06-28', true , 'nema','1', '16', 6, 2, 3, 3, 3);
 INSERT INTO public.pregled(
 	cena, datum,  odobren, popust, trajanje, vreme, doktor_id, klinika_id, pacijent_id, sala_id, tip_pregleda_id)
-	VALUES ( 2000, '2020-06-20', true , 'nema','3', '20', 6, 2, 1, 3, 3);
+	VALUES ( 2000, '2020-06-28', true , 'nema','3', '20', 6, 2, 1, 3, 3);
 
 /*  istorija pregleda  */
 INSERT INTO public.pregled(

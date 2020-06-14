@@ -30,17 +30,23 @@ public class PregledService {
     @Autowired
     PacijentRepository pacijentRepository;
 
-    public ArrayList<PregledDTO> izlistajUnapredDefPreglede(Long id) {
+    public ArrayList<PregledDTO> izlistajUnapredDefPreglede(Long id) throws ParseException {
         Klinika klinika = klinikaRepository.findById(id).orElse(null);
         if (klinika == null) {
             throw new NoSuchElementException();
         }
 
+        Date danas = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
         ArrayList<Pregled> pregledi = pregledRepository.getByKlinikaAndPacijentNull(klinika);
         ArrayList<PregledDTO> preglediDTO = new ArrayList<>();
         for (Pregled p : pregledi) {
-            PregledDTO pregledDTO = new PregledDTO(p);
-            preglediDTO.add(pregledDTO);
+            Date datumPregleda = formatter.parse(p.getDatum());
+            if (datumPregleda.after(danas) || datumPregleda.equals(danas)) {
+                preglediDTO.add(new PregledDTO(p));
+            }
+
         }
         return preglediDTO;
     }
